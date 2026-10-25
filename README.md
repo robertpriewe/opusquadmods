@@ -25,16 +25,6 @@ OQ MODS adds an optional mod menu and a set of selectable changes to the OPUS-QU
 
 Other additions include side-screen track browsing, quick USB shortcuts, alternate waveform timing, a light theme, FX frequency controls, per-deck Slip behavior, gated hot cues, jog-ring effects, and diagnostics. Some entries are observation/research tools only and do not alter audio or playlist data.
 
-### Current candidate status
-
-| Area | Evidence | R53 status |
-|---|---|---|
-| Package integrity | Offline checks and read-only payload comparison | Passed in the build environment |
-| Menu authorization/config file behavior | Disposable QEMU, RAM-backed USB | Exercised in QEMU |
-| Four-deck layout and the established mods | Earlier physical OPUS-QUAD tests | Previously reported working; not a fresh R53 test |
-| R53 update/install and first boot | No physical R53 test yet | **Unverified** |
-| R53 settings persistence on a real USB stick | QEMU only | **Unverified on hardware** |
-| Full controller rollback to stock | Not tested | **Not guaranteed** |
 
 See [R53 validation and release checklist](RELEASE-CHECKLIST.md) before preparing a public binary release.
 
