@@ -25,8 +25,32 @@ OQ MODS adds an optional mod menu and a set of selectable changes to the OPUS-QU
 
 Other additions include side-screen track browsing, quick USB shortcuts, alternate waveform timing, a light theme, FX frequency controls, per-deck Slip behavior, gated hot cues, jog-ring effects, and diagnostics. Some entries are observation/research tools only and do not alter audio or playlist data.
 
+### Feature list and roadmap
 
-See [R53 validation and release checklist](RELEASE-CHECKLIST.md) before preparing a public binary release.
+The checklist below describes project functionality—not a guarantee that every feature has been re-tested in the latest firmware candidate. The current R53 candidate still needs its own hardware validation; see the [release checklist](RELEASE-CHECKLIST.md).
+
+#### Implemented
+
+- [x] **Four-deck waveform layout** — four native detailed waveform lanes, ordered Deck 3 → Deck 1 → Deck 2 → Deck 4.
+- [x] **Light theme** — optional light palettes, including the blue/gray waveform palette.
+- [x] **Side-screen track browsing** — browse USBs, playlists, and tracks from the player’s side displays.
+- [x] **Slip mode** — per-deck Slip behavior mapped to the SLIP REVERSE control.
+- [x] **FX frequency isolation** — LOW/HIGH controls for applying Beat FX to the selected frequency range.
+- [x] **FX target selection with the TIME knob** — select the FX target without using the touchscreen; SHIFT retains TIME adjustment.
+- [x] **Gated hot cues** — hold-to-audition behavior with cue-point return and PLAY latch behavior.
+- [x] **Quick USB switching** — on-screen shortcuts to detected USB sources.
+- [x] **Jog-ring Party Mode** — selectable LED patterns and speeds.
+- [x] **USB-persisted mod settings** — save mod choices on USB and restore them on a later boot when the settings file is present.
+
+#### Roadmap
+
+- [ ] **Playlist editing** — create or modify playlists from the player.
+- [ ] **Stems support** — investigate native stem playback and controls.
+- [ ] **Large moving waveforms on side screens** — show full-size, live deck waveforms on the side displays.
+- [ ] **Additional small-font options** — fit more information into the main display’s browse views.
+- [ ] **Double/halve BPM** — add quick BPM doubling and halving controls.
+- [ ] **Bluetooth-in waveform recording** — explore recording an incoming Bluetooth source, similar to the XDJ-AZ feature.
+- [ ] **Full PRO DJ LINK support** — investigate networked player and library integration.
 
 ---
 
@@ -36,9 +60,9 @@ These images are useful for understanding the UI, but they are **not all from th
 
 ### Four detailed waveform lanes
 
-![Four-deck waveform layout preview from QEMU; four fixture tracks are visible](assets/four-deck-waveforms-qemu.png)
+![Four-deck waveform layout in QEMU with a Beat FX panel on the right and no four bottom overview cards](assets/four-deck-waveforms-qemu.png)
 
-*QEMU preview, earlier layout build. Four native detailed waveform lanes are shown with compact track overviews. It illustrates the layout, not R53's final visual state or a hardware performance guarantee.*
+*QEMU preview from the R20 layout work: four detailed waveform lanes, a Beat FX box on the right, and no four mini-player/overview cards along the bottom. It is newer than the previous README image, but still predates R53 and is not a hardware capture or performance guarantee.*
 
 ### OQ MODS menu and waveform timing
 
@@ -235,7 +259,7 @@ Consult the release-specific `README-FIRST.md` and recovery notes that accompany
 
 ## Credits
 
-Thanks to the reverse-engineering and modding community for sharing device research and for the XDJ-AZ work that informed some of the OPUS-QUAD investigations. This is an independent OPUS-QUAD effort; AZ-specific binaries and firmware are not interchangeable with OPUS-QUAD firmware.
+Thanks to **Kyle Hosman**, creator of [XDJ-AZ Mods](https://github.com/Kyle-Hosman/xdj-az-mods), and to **LycheeAPPF** and **Tratosca** for their guidance, research, and community support. Their work and advice helped inform this independent OPUS-QUAD project; this does not imply that AZ firmware or binaries are compatible with the OPUS-QUAD.
 
 ---
 
