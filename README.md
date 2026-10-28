@@ -16,33 +16,33 @@ The following are perspective-corrected, cleaned-up visual renderings based on o
 
 Four native detailed waveforms are arranged **Deck 3, Deck 1, Deck 2, Deck 4**, keeping the primary Deck 1/2 lanes centered. The optional FX sidebar sits at the right; the original track overviews can be enabled separately.
 
-![Four-deck waveform layout with FX sidebar](docs/screenshots/four-deck-waveform.png)
+![Four-deck waveform layout with FX sidebar](assets/four-deck-waveform.png)
 
 ### Browse from the side screens
 
 Hold a deck selector to open that deck's side-screen browser. Browse the USB → playlist → track hierarchy, select a track, and confirm loading. The browser supports the beat-loop wheels, deck buttons, or track-search buttons as the navigation scheme.
 
-![Side-screen track selection](docs/screenshots/side-browser-track-select.png)
+![Side-screen track selection](assets/side-browser-track-select.png)
 
-![Side Browser controls in the mod menu](docs/screenshots/side-browser-settings.png)
+![Side Browser controls in the mod menu](assets/side-browser-settings.png)
 
 ### Configure mods on the unit
 
 The on-device menu is currently labeled **OQ Mods**. It is scrollable and exposes the available options and per-mod settings.
 
-![Four-deck mod settings](docs/screenshots/four-deck-settings.png)
+![Four-deck mod settings](assets/four-deck-settings.png)
 
 ### FX and performance controls
 
 The FX Target Knob mod assigns the Beat FX TIME knob to the FX target selector; hold SHIFT while turning it to adjust effect time. FX Frequency provides LOW/HIGH tone isolation controls, and the Beat FX sidebar provides a home for the FX controls and quick Gate Cue toggle.
 
-![FX target knob settings](docs/screenshots/fx-target-knob.png)
+![FX target knob settings](assets/fx-target-knob.png)
 
-![Party Mode in the scrolled mod list](docs/screenshots/party-mode-list.png)
+![Party Mode in the scrolled mod list](assets/party-mode-list.png)
 
 Quick USB Access adds named, color-coded shortcuts near the waveform header. Selecting one opens that USB's native browser rather than loading a track directly.
 
-![Quick USB Access settings](docs/screenshots/quick-usb-access.png)
+![Quick USB Access settings](assets/quick-usb-access.png)
 
 ## Included mods
 
