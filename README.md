@@ -50,17 +50,17 @@ Slip Mode is toggled per deck through the SLIP REVERSE control, with LED feedbac
 
 ![Slip Mode settings preview](assets/slip-mode-qemu.png)
 
-### Smooth Waveforms
-
-The waveform timing options include **Native Height 30**, Stock, Smooth 30, and Experimental 60. For the four-deck layout, use **Native Height 30**: the other modes stutter on the OPUS-QUAD hardware.
-
-![Smooth Waveforms options with Native Height 30 selected](assets/hardware-views/smooth-waveforms.png)
-
 ### Quick USB Access
 
 Quick USB Access adds named, color-aware shortcuts near the waveform header. Selecting one opens that USB's native browser rather than loading a track directly.
 
 ![Quick USB Access settings](assets/hardware-views/r71-quick-usb-access.png)
+
+### Smooth Waveforms
+
+The waveform timing options include **Native Height 30**, Stock, Smooth 30, and Experimental 60. For the four-deck layout, use **Native Height 30**: the other modes stutter on the OPUS-QUAD hardware.
+
+![Smooth Waveforms options with Native Height 30 selected](assets/hardware-views/smooth-waveforms.png)
 
 ### Party Mode
 
