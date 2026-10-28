@@ -91,6 +91,12 @@ Playlist editing, stem processing, and beat-grid editing are not presented as wo
 
 ## Getting started
 
+### Firmware patcher
+
+The macOS patcher verifies the official 1.32 source locally and generates the R71 update file; it does not flash the player.
+
+![R71 macOS firmware patcher](assets/patcher-r71-macos.png)
+
 1. Obtain the official OPUS-QUAD **1.32** update from Pioneer DJ. It is not bundled here.
 2. Download the matching Opus Quad Mods patcher for macOS or Windows from the project's **Releases** page.
 3. Open the patcher, choose the official `OPUSQUADv132.UPD`, and generate the modified update. The patcher validates the input and verifies the output locally; it does not upload firmware or flash the player.
