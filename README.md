@@ -1,4 +1,4 @@
-# Robs Opus Quad Mods for Pioneer OPUS-QUAD
+# Robs Opus Quad Mods
 
 **The first custom firmware for the Pioneer OPUS-QUAD.**
 
