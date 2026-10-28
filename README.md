@@ -1,8 +1,8 @@
 # Robs Opus Quad Mods for Pioneer OPUS-QUAD
 
-**The first community custom firmware for the Pioneer OPUS-QUAD.**
+**The first custom firmware for the Pioneer OPUS-QUAD.**
 
-Robs Opus Quad Mods (shortened to **OQ Mods** later in this document) is a community custom-firmware project for the OPUS-QUAD, based on official firmware **1.32**.
+Robs Opus Quad Mods is a custom-firmware project for the OPUS-QUAD, based on official firmware **1.32**.
 
 The current public build is **R70 (1.32X, internal app revision 7709)**. It adds a native four-deck waveform layout and a collection of optional interface, browsing, FX, cue, and jog-ring features. The public release is distributed as a binary patcher; Pioneer firmware files are not included.
 
