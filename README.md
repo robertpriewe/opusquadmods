@@ -28,7 +28,7 @@ Light Mode provides an alternate, softer interface palette while retaining the f
 
 Hold a deck selector to open that deck's side-screen browser. Browse the USB → playlist → track hierarchy, select a track, and confirm loading. The browser supports the beat-loop wheels, deck buttons, or track-search buttons as the navigation scheme.
 
-![Side-screen track selection preview](assets/side-browser-deck3-static-preview.png)
+![Side-screen track selection preview](assets/side-browser-track-select.png)
 
 *Static UI preview of the side-browser track list; it uses sample content rather than a live library.*
 
