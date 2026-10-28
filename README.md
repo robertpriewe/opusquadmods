@@ -50,8 +50,6 @@ Slip Mode is toggled per deck through the SLIP REVERSE control, with LED feedbac
 
 ![Slip Mode settings preview](assets/slip-mode-qemu.png)
 
-*QEMU settings preview; hardware operation was separately tested by the project owner.*
-
 ### Smooth Waveforms
 
 The waveform timing options include **Native Height 30**, Stock, Smooth 30, and Experimental 60. For the four-deck layout, use **Native Height 30**: the other modes stutter on the OPUS-QUAD hardware.
@@ -86,16 +84,15 @@ Enable or configure these from the on-device **OQ Mods** menu. Some are disabled
 - **Gated Hot Cues** — hold a hot cue for gated playback; release behavior returns to the cue point unless PLAY was pressed while holding. A quick toggle is available in the FX sidebar when enabled.
 - **Party Mode** — jog-ring effects and speed settings described above. Slip indicators and LED diagnostics take priority. Flashing effects are optional; avoid them if sensitive to flashing lights.
 - **Persistent settings** — mod settings are stored in `OPUSMOD_SETTINGS.cfg` on the USB. The patcher preserves an existing settings file and creates a default one only if it is missing.
-- **Optional diagnostics** — diagnostic tools are hidden in the public build unless `enable_diagnostics.txt` is present on a USB stick.
 
 ## Not included in the public build
 
-Playlist editing, stem processing, and beat-grid editing are not presented as working R71 public features. The development menu may show research labels when diagnostics are enabled, but those labels do not mean the feature is implemented. See the roadmap below for future work.
+Playlist editing, stem processing, and beat-grid editing are not presented as working R71 public features.
 
 ## Getting started
 
 1. Obtain the official OPUS-QUAD **1.32** update from Pioneer DJ. It is not bundled here.
-2. Download the matching Robs Opus Quad Mods patcher for macOS or Windows from the project's **Releases** page. The v0.6.0 patcher may still display its original “OQ Mods Patcher” branding.
+2. Download the matching Opus Quad Mods patcher for macOS or Windows from the project's **Releases** page.
 3. Open the patcher, choose the official `OPUSQUADv132.UPD`, and generate the modified update. The patcher validates the input and verifies the output locally; it does not upload firmware or flash the player.
 4. Copy the generated `OPUSQUADv132.UPD` to the root of a dedicated update USB. Keep the stock 1.32 update on a separate, clearly labeled recovery USB.
 5. With the unit powered off, hold **BEAT SYNC** and **MASTER** on the right deck while powering it on to enter the update screen. Follow the on-screen instructions. Do not power off or remove the USB during the update.
@@ -107,7 +104,7 @@ The standalone patchers are versioned independently from the firmware. Confirm t
 
 - Real-time playlist editing and reordering
 - Stem support
-- Large moving waveforms on the side displays
+- Large moving waveforms on the side displays (FLX10 style)
 - Smaller system-wide font options
 - One-touch BPM half/double controls
 - Bluetooth-in waveform recording
