@@ -8,10 +8,6 @@ The current public build is **R71 (1.32X)**. It adds a native four-deck waveform
 
 > **Use this firmware at your own risk.** I have flashed firmware on my OPUS-QUAD many times—well over a hundred—and have always been able to recover from failed attempts by restoring stock firmware. That is my experience, not a guarantee: a failed flash could still leave your unit unusable, and recovery may not work for everyone. Keep a known-good official stock 1.32 update available on a separate USB, use reliable power, and never interrupt an update. Use only with an OPUS-QUAD and the exact official 1.32 update file accepted by the patcher. I have tested restoring stock 1.32 and installing a custom build on a physical unit; this does not guarantee every unit or future build.
 
-## Feature gallery
-
-The following are perspective-corrected, cleaned-up visual renderings based on owner-supplied photos of the physical unit, except where a caption identifies a QEMU preview. They are illustrative and not raw framebuffer captures; fine visual details may be smoothed during cleanup.
-
 ### Four-deck waveform view
 
 Four native detailed waveforms are arranged **Deck 3, Deck 1, Deck 2, Deck 4**, keeping the primary Deck 1/2 lanes centered. The optional FX sidebar sits at the right; the original track overviews can be enabled separately.
