@@ -26,7 +26,6 @@ Hold a deck selector to open that deck's side-screen browser. Browse the USB →
 
 ![Side-screen track selection preview](assets/side-browser-track-select.png)
 
-*Static UI preview of the side-browser track list; it uses sample content rather than a live library.*
 
 ### Gated Hot Cues
 
@@ -118,4 +117,4 @@ The standalone patchers are versioned independently from the firmware. Confirm t
 - **LycheeAPPF and Tratosca** — guidance and knowledge shared during development.
 - The OPUS-QUAD community and everyone who tested builds and reported results.
 
-Robs Opus Quad Mods is an independent community project and is not affiliated with or endorsed by AlphaTheta or Pioneer DJ. Product names are used only to identify compatibility.
+Opus Quad Mods is an independent community project and is not affiliated with or endorsed by AlphaTheta or Pioneer DJ. Product names are used only to identify compatibility.
