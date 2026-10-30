@@ -114,7 +114,7 @@ The standalone patchers are versioned independently from the firmware. Confirm t
 ## Credits
 
 - **Kyle Hosman** — creator of the XDJ-AZ Mods project, whose public work provided valuable reference and inspiration.
-- **LycheeAPPF and Tratosca** — guidance and knowledge shared during development.
+- **LycheeAPPF, Tratosca and Sam Leone** — guidance and knowledge shared during development.
 - The OPUS-QUAD community and everyone who tested builds and reported results.
 
 Opus Quad Mods is an independent community project and is not affiliated with or endorsed by AlphaTheta or Pioneer DJ. Product names are used only to identify compatibility.
