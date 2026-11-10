@@ -1,10 +1,41 @@
 {
   "format": 1,
   "updated": "2026-11-09",
-  "latest": "",
+  "latest": "R120",
   "app": {
     "version": "1.2.0",
     "url": "https://github.com/robertpriewe/opusquadmods/releases/tag/app-1.2.0"
   },
-  "firmware": []
+  "firmware": [
+    {
+      "release": "R120",
+      "label": "1.32X R120",
+      "date": "2026-11-09",
+      "internal_app_revision": 7761,
+      "note": "",
+      "output_filename": "OPUSQUADv132.UPD",
+      "source": {
+        "size": 176345103,
+        "payload_size": 176345088,
+        "sha256": "6ed20dc3b37211b8762c1759a0942af24c9941cdfe1f7a8fd26bfa3d7432f30a",
+        "crc32": 550163428
+      },
+      "target": {
+        "size": 176345103,
+        "payload_size": 176345088,
+        "sha256": "ac7755e9d8aec1447fd8cc604343f2ff0de6971b83805b03bb4bc1b6fc3d1a83",
+        "crc32": 1397861575
+      },
+      "footer": "XDJ-RR1.32",
+      "delta": {
+        "file": "R120-upd-delta.zstd",
+        "sha256": "91b04edd6b99a21506b4eeee27e0695e105b0edc5ddbb6540c68e533c9b94769",
+        "size": 170906815,
+        "zstd_long": 31,
+        "url": "https://github.com/robertpriewe/opusquadmods/releases/download/firmware-R120/R120-upd-delta.zstd"
+      },
+      "release_page": "https://github.com/robertpriewe/opusquadmods/releases/tag/firmware-R120",
+      "changelog": "## Highlights\n\n- **Add-on mods.** Every feature is now a separate add-on in `MODS/` on your USB stick. You switch each one on or off in ROBS MOD MENU, each has its own settings, and you can add, update or remove them without a firmware update. The firmware itself is now a slim base layer.\n- **Mod updates without flashing.** The new OQ Mods Patcher has a **Mods** tab that reads the live mod list from this repo (`mods/`). For every mod it shows the version on your USB stick and the latest version, and you can install, update or pick an older version. **Select updates** ticks everything with a newer version, **Changelog** shows what changed in each version, and **?** describes each mod. Mods are written straight to your stick and checked before use. Mods new to the stick start switched off; your existing settings and switches are kept.\n- **Firmware updates from the app.** The OQ Mods Patcher is now one small app for every firmware: its **Firmware** tab lists the released firmware versions with their changelogs, shows which firmware your player runs and whether a newer one is available, and downloads the patch and writes the update straight to your USB drive from your official 1.32 update (chosen once and remembered). Older firmware versions stay available. The player notes its firmware version on the stick at start-up so the app can tell.\n- **Online mod catalog.** Every mod has its own folder in `mods/` with a changelog and every released version, so you can also download a mod by hand.\n- **Mod SDK.** Other developers can build their own add-ons with the SDK, without the firmware source. It includes events (track loaded, play/pause, BPM/key change, near end of track), LED and screen access, menu actions and a read-only master audio feed.\n- **TYTO's Side Screen View.** CDJ-3000-style side screens by TYTO: the selected deck and master waveforms, artwork and track info, plus an orange MASTER PLAYER badge on the master deck. Follows Light Mode and Hide Track Name.\n- **Boot label.** The startup screen shows \"ROBS MOD 1.32X\" and the installed release in the bottom-right corner.\n- **ROBS MOD MENU.** The mod menu in the SOURCE list is now called ROBS MOD MENU.\n\n## New and improved features\n\n- **Light Mode** now covers the bottom mixer/MIC panels and the deck input pop-up menu, with a normal or blue waveform palette.\n- **Side-screen deck colours** follow SHORTCUT > Deck Color.\n- **Party Mode**: animated jog-ring LED colour effects with selectable speed.\n- **Slip Mode**: replaces Slip Reverse with Slip on each deck.\n- **FX Knob Selector**: turn Beat FX TIME to pick MIC / 1\u20134 / MASTER; hold SHIFT to change the effect time.\n- **Gate Cues**: on a paused deck, hold a hot cue to audition it.\n- **Hide Track Name** now also hides artists and works on TYTO's side screens.\n- **Side Screen Browser** has three control schemes and remembers where you were.\n- **4-Deck Waveforms**: smooth native-height mode, lane order and track overview options in one place.\n- **Stems** is no longer experimental.\n- **Mod Menu**: one page per mod with icons, scrolling options, choice buttons and status lines. Long names are shortened to fit.\n- **Side Screen Waveforms (Legacy)**: the original side-screen view, still available as its own add-on.\n\n## Fixes\n\n- The Beat FX sidebar no longer covers the FX selection list or the track info / Edit Rating panels.\n- The FX overlay shows in 4-deck view with the sidebar off (#3).\n- Side-screen hot cues, cue colours and loops now update live.\n- Fixed a crash on track load and a side-screen controller update failure.\n- Light Mode stays light after the deck input menu is opened and closed.\n- The add-on page no longer drops the last mod when many are switched on.\n- Many smaller stability and layout fixes.\n\n## Notes\n\n- Keep the official stock 1.32 update on a separate USB for recovery.\n- The stems engine is a port of Kyle Hosman's AZ-MODS stems engine (GPL-3.0)."
+    }
+  ]
 }
