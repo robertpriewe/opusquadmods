@@ -1,0 +1,7 @@
+{
+  "folder": "party",
+  "title": "Party Mode",
+  "description": "Animate the jog-wheel ring LEDs with colour effects.\nChoose an effect and transition speed below.\nDisabling restores normal deck colours.\nFlashing effects may affect photosensitive users.",
+  "order": 130,
+  "min_firmware": "R117"
+}

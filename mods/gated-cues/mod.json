@@ -1,0 +1,7 @@
+{
+  "folder": "gated-cues",
+  "title": "Gate Cues",
+  "description": "On paused decks, hold a hot cue to audition it.\nReleasing a cue stops and returns to its cue point.\nPress PLAY while holding to latch normal playback.\nThe optional quick toggle needs Beat FX Sidebar.",
+  "order": 100,
+  "min_firmware": "R117"
+}

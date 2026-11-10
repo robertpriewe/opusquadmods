@@ -1,0 +1,7 @@
+{
+  "folder": "side-now-playing-legacy",
+  "title": "Side Screen Waveforms (Legacy)",
+  "description": "The original side-screen view: the deck's waveform, cues, loops,\nBPM, key and time on each side screen.\nRequires Side Screen Browser. TYTO's Side Screen View is the newer view.",
+  "order": 160,
+  "min_firmware": "R117"
+}

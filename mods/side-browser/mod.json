@@ -1,0 +1,7 @@
+{
+  "folder": "side-browser",
+  "title": "Side Screen Browser",
+  "description": "Hold Deck Select for one second to browse USB playlists\nand tracks on that side. Choose a control scheme below.\nBeat Loop: turn to scroll, press to open, hold to go back.\nCloses after loading. Enable native LOAD LOCK for safety.",
+  "order": 30,
+  "min_firmware": "R117"
+}

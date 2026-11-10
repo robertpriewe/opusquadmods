@@ -1,0 +1,7 @@
+{
+  "folder": "slip-mode",
+  "title": "Slip Mode",
+  "description": "Replace each deck's Slip Reverse control with Slip.\nPlayback continues in the background during scratching;\nrelease to resume at the continuing playback position.\nFlashing deck LEDs indicate that Slip is active.",
+  "order": 110,
+  "min_firmware": "R117"
+}

@@ -1,0 +1,7 @@
+{
+  "folder": "tyto-sidescreen",
+  "title": "TYTO's Side Screen View",
+  "description": "Show the selected deck and master waveforms on each\nside screen, with artwork and track information.\nThe master player uses an orange MASTER PLAYER badge.\nFollows Light Mode and Hide Track Name settings.",
+  "order": 20,
+  "min_firmware": "R117"
+}

@@ -1,0 +1,7 @@
+{
+  "folder": "zone-continuous",
+  "title": "Continuous Zone Playback",
+  "description": "Automatically start the next track on the deck assigned\nto ZONE playback. Choose the ZONE assignment using\nthe normal controls. Disable this mod to restore\nthe stock continuation behavior.",
+  "order": 150,
+  "min_firmware": "R117"
+}

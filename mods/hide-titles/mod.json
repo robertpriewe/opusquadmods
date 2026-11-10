@@ -1,0 +1,7 @@
+{
+  "folder": "hide-titles",
+  "title": "Hide Track Name",
+  "description": "Hide track names on the main display and compatible\nTYTO side screens. Use the eye controls to reveal or\nhide names while keeping the other deck information.",
+  "order": 140,
+  "min_firmware": "R117"
+}

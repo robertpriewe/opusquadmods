@@ -1,0 +1,7 @@
+{
+  "folder": "quick-usb",
+  "title": "Quick USB",
+  "description": "Show named, colour-coded USB shortcuts above the\nwaveforms. Tap a drive to open its native browser.\nThe active source is highlighted; tapping does not\nload a track into a deck.",
+  "order": 60,
+  "min_firmware": "R117"
+}

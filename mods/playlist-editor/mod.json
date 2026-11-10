@@ -1,0 +1,7 @@
+{
+  "folder": "playlist-editor",
+  "title": "Playlist Editing",
+  "description": "Edit track order from the main-screen playlist browser.\nHold the main browse knob on a playlist track to open\nthe editing controls. Changes apply to the USB library;\nkeep a backup of your export before editing.",
+  "order": 120,
+  "min_firmware": "R117"
+}

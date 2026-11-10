@@ -1,0 +1,7 @@
+{
+  "folder": "four-deck",
+  "title": "4-Deck Waveforms",
+  "description": "Choose 2 DECK, 2/4 DECK or four native waveform lanes.\nSet smoothing here: Native Height 30 is the default and\nrecommended mode for smooth four-deck playback.\nLane order and track overviews can also be changed.",
+  "order": 10,
+  "min_firmware": "R117"
+}

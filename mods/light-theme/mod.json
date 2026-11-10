@@ -1,0 +1,7 @@
+{
+  "folder": "light-theme",
+  "title": "Light Mode",
+  "description": "Use a light interface for bright environments.\nChoose the normal or blue waveform palette below.\nAlso updates compatible TYTO side-screen waveforms.",
+  "order": 50,
+  "min_firmware": "R117"
+}

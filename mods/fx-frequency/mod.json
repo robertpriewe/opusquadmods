@@ -1,0 +1,7 @@
+{
+  "folder": "fx-frequency",
+  "title": "FX Frequency",
+  "description": "Choose LOW, ALL or HIGH to select the frequency range\nused by the filter-assisted Beat FX controls.\nBeat FX Sidebar must be enabled to show the buttons.\nThis does not add an independent three-band master EQ.",
+  "order": 80,
+  "min_firmware": "R117"
+}

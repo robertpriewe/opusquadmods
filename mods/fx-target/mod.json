@@ -1,0 +1,7 @@
+{
+  "folder": "fx-target",
+  "title": "FX Knob Selector",
+  "description": "Turn Beat FX TIME to select MIC / 3 / 1 / 2 / 4 / MASTER.\nChoose how many detents move to the next target.\nHold SHIFT while turning TIME to change effect time.\nThe FX SELECT knob keeps its normal function.",
+  "order": 90,
+  "min_firmware": "R117"
+}

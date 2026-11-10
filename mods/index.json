@@ -1,0 +1,294 @@
+{
+  "format": 1,
+  "updated": "2026-11-09",
+  "mods": [
+    {
+      "folder": "four-deck",
+      "title": "4-Deck Waveforms",
+      "description": "Choose 2 DECK, 2/4 DECK or four native waveform lanes.\nSet smoothing here: Native Height 30 is the default and\nrecommended mode for smooth four-deck playback.\nLane order and track overviews can also be changed.",
+      "order": 10,
+      "min_firmware": "R117",
+      "latest": "2.2",
+      "versions": [
+        {
+          "version": "2.2",
+          "date": "2026-11-09",
+          "path": "four-deck/versions/2.2/four-deck.zip",
+          "size": 10471,
+          "sha256": "ee8672656a9542ec023d03b9405d6c7b800735e689f9e53119e780caac031174",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "tyto-sidescreen",
+      "title": "TYTO's Side Screen View",
+      "description": "Show the selected deck and master waveforms on each\nside screen, with artwork and track information.\nThe master player uses an orange MASTER PLAYER badge.\nFollows Light Mode and Hide Track Name settings.",
+      "order": 20,
+      "min_firmware": "R117",
+      "latest": "2.2",
+      "versions": [
+        {
+          "version": "2.2",
+          "date": "2026-11-09",
+          "path": "tyto-sidescreen/versions/2.2/tyto-sidescreen.zip",
+          "size": 322920,
+          "sha256": "c888522918f340c44b0e8075008314e7c5706f1ea1e011979c3d7a666343e94c",
+          "changelog": "- CDJ-3000 style side screens with artwork, track info and a MASTER PLAYER badge on the master deck."
+        }
+      ]
+    },
+    {
+      "folder": "side-browser",
+      "title": "Side Screen Browser",
+      "description": "Hold Deck Select for one second to browse USB playlists\nand tracks on that side. Choose a control scheme below.\nBeat Loop: turn to scroll, press to open, hold to go back.\nCloses after loading. Enable native LOAD LOCK for safety.",
+      "order": 30,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "side-browser/versions/2.0/side-browser.zip",
+          "size": 12895,
+          "sha256": "c0e10345828501bdff8a8959e36d0cb888223e37ea8f511d70047c0d36260e9f",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "stems",
+      "title": "Stems",
+      "description": "Control prepared stems independently for each deck.\nUse compatible pre-generated stem files on the USB.\nEnable the mod, load a prepared track and use the\non-screen stem controls to mute or restore parts.",
+      "order": 40,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "stems/versions/2.0/stems.zip",
+          "size": 103739,
+          "sha256": "36fa33a6b39112a081d32ebfd7b69d7c57bb56c737bbca3e8f0d9571910d6a74",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "light-theme",
+      "title": "Light Mode",
+      "description": "Use a light interface for bright environments.\nChoose the normal or blue waveform palette below.\nAlso updates compatible TYTO side-screen waveforms.",
+      "order": 50,
+      "min_firmware": "R117",
+      "latest": "2.2",
+      "versions": [
+        {
+          "version": "2.2",
+          "date": "2026-11-09",
+          "path": "light-theme/versions/2.2/light-theme.zip",
+          "size": 26522,
+          "sha256": "975bf609a0eb1173362abb70596700930f3b74c737d7d44fe4d1eca5ede44902",
+          "changelog": "- The bottom mixer and MIC panels and the deck input pop-up menu stay light."
+        }
+      ]
+    },
+    {
+      "folder": "quick-usb",
+      "title": "Quick USB",
+      "description": "Show named, colour-coded USB shortcuts above the\nwaveforms. Tap a drive to open its native browser.\nThe active source is highlighted; tapping does not\nload a track into a deck.",
+      "order": 60,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "quick-usb/versions/2.0/quick-usb.zip",
+          "size": 5081,
+          "sha256": "3846a471a9dded641efa2699b42cbcf1f4fb497c0a4046aec75d8ac54d456623",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "fx-sidebar",
+      "title": "Beat FX Sidebar",
+      "description": "Keep effect name, BPM, beat and time visible beside\nthe waveforms in all layouts. Native popups stay above it.\nEnable this sidebar to use the FX Frequency controls\nand the optional Gate Cues quick toggle.",
+      "order": 70,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "fx-sidebar/versions/2.0/fx-sidebar.zip",
+          "size": 6499,
+          "sha256": "e7c2770bcba737a3e5a4d7ebb67e302d51e7a7283e9c46af52f624d99a976ad6",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "fx-frequency",
+      "title": "FX Frequency",
+      "description": "Choose LOW, ALL or HIGH to select the frequency range\nused by the filter-assisted Beat FX controls.\nBeat FX Sidebar must be enabled to show the buttons.\nThis does not add an independent three-band master EQ.",
+      "order": 80,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "fx-frequency/versions/2.0/fx-frequency.zip",
+          "size": 5537,
+          "sha256": "d8f02a82d955b286e30a2f91351c4331c735a02aa551ab9cf8cf58b2f6ac0511",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "fx-target",
+      "title": "FX Knob Selector",
+      "description": "Turn Beat FX TIME to select MIC / 3 / 1 / 2 / 4 / MASTER.\nChoose how many detents move to the next target.\nHold SHIFT while turning TIME to change effect time.\nThe FX SELECT knob keeps its normal function.",
+      "order": 90,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "fx-target/versions/2.0/fx-target.zip",
+          "size": 4933,
+          "sha256": "d14864eac9fc85627e28741cdc0d2d00ae4ac1fef64a31c9bf941acefdd911ac",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "gated-cues",
+      "title": "Gate Cues",
+      "description": "On paused decks, hold a hot cue to audition it.\nReleasing a cue stops and returns to its cue point.\nPress PLAY while holding to latch normal playback.\nThe optional quick toggle needs Beat FX Sidebar.",
+      "order": 100,
+      "min_firmware": "R117",
+      "latest": "1.0",
+      "versions": [
+        {
+          "version": "1.0",
+          "date": "2026-11-09",
+          "path": "gated-cues/versions/1.0/gated-cues.zip",
+          "size": 5458,
+          "sha256": "4ab6e3be7e451560055242b8755824c43b462318f406c8c608870121e9a6b73a",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "slip-mode",
+      "title": "Slip Mode",
+      "description": "Replace each deck's Slip Reverse control with Slip.\nPlayback continues in the background during scratching;\nrelease to resume at the continuing playback position.\nFlashing deck LEDs indicate that Slip is active.",
+      "order": 110,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "slip-mode/versions/2.0/slip-mode.zip",
+          "size": 4878,
+          "sha256": "985252ac924024dfc3c9de4aba90c9ef5ea706beb23225058fe97567307b42b7",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "playlist-editor",
+      "title": "Playlist Editing",
+      "description": "Edit track order from the main-screen playlist browser.\nHold the main browse knob on a playlist track to open\nthe editing controls. Changes apply to the USB library;\nkeep a backup of your export before editing.",
+      "order": 120,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "playlist-editor/versions/2.0/playlist-editor.zip",
+          "size": 13213,
+          "sha256": "f511309b9dff2471365c3a739d54c17907543a0ed2e0649668cb58589cbef31a",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "party",
+      "title": "Party Mode",
+      "description": "Animate the jog-wheel ring LEDs with colour effects.\nChoose an effect and transition speed below.\nDisabling restores normal deck colours.\nFlashing effects may affect photosensitive users.",
+      "order": 130,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "party/versions/2.0/party.zip",
+          "size": 3788,
+          "sha256": "2a2e0362ebb1d9a72460910fa3e7804e156d50640786dfe252d774f50bf0ea65",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "hide-titles",
+      "title": "Hide Track Name",
+      "description": "Hide track names on the main display and compatible\nTYTO side screens. Use the eye controls to reveal or\nhide names while keeping the other deck information.",
+      "order": 140,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "hide-titles/versions/2.0/hide-titles.zip",
+          "size": 7664,
+          "sha256": "6c479a198ce0fa6ca3c6ff97c97bf6699f43c8148863881674c9607e6e1b1534",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "zone-continuous",
+      "title": "Continuous Zone Playback",
+      "description": "Automatically start the next track on the deck assigned\nto ZONE playback. Choose the ZONE assignment using\nthe normal controls. Disable this mod to restore\nthe stock continuation behavior.",
+      "order": 150,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "zone-continuous/versions/2.0/zone-continuous.zip",
+          "size": 4246,
+          "sha256": "b227bc5356e6c13ec0f71fdee53d569dd40153bbe540db532ac107cc93d9d9fe",
+          "changelog": "- First version in the online mod catalog."
+        }
+      ]
+    },
+    {
+      "folder": "side-now-playing-legacy",
+      "title": "Side Screen Waveforms (Legacy)",
+      "description": "The original side-screen view: the deck's waveform, cues, loops,\nBPM, key and time on each side screen.\nRequires Side Screen Browser. TYTO's Side Screen View is the newer view.",
+      "order": 160,
+      "min_firmware": "R117",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-09",
+          "path": "side-now-playing-legacy/versions/2.0/side-now-playing-legacy.zip",
+          "size": 5807,
+          "sha256": "876a3ce78a649862a551abb8de3f111778c6fbfc2c777fa99f8efda19909e0eb",
+          "changelog": "- The original side-screen waveform view, available as its own mod."
+        }
+      ]
+    }
+  ]
+}

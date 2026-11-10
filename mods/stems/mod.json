@@ -1,0 +1,7 @@
+{
+  "folder": "stems",
+  "title": "Stems",
+  "description": "Control prepared stems independently for each deck.\nUse compatible pre-generated stem files on the USB.\nEnable the mod, load a prepared track and use the\non-screen stem controls to mute or restore parts.",
+  "order": 40,
+  "min_firmware": "R117"
+}
