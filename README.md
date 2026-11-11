@@ -4,7 +4,16 @@
 
 Robs Opus Quad Mods is a custom-firmware project for the OPUS-QUAD, based on official firmware **1.32**.
 
-The current public build is **R94 (1.32X)**. It adds a native four-deck waveform layout, FLX10-style "now playing" side screens, a side-screen browser, stems, and a collection of optional interface, browsing, FX, cue and jog-ring features. The public release is distributed as a binary patcher; Pioneer firmware files are not included.
+The current public build is **R120 (1.32X)**. It adds a native four-deck waveform layout, CDJ-3000 style side screens, a side-screen browser, stems, and a collection of optional interface, browsing, FX, cue and jog-ring features. The firmware is installed with the **OQ Mods Patcher**, which builds the update from your own official 1.32 file; Pioneer firmware files are not included.
+
+### Mods and the installer
+
+Every feature is a separate **mod** that lives on your settings USB in `MODS/<mod>/`. The firmware is a slim base that loads them; each mod is switched on and configured in **ROBS MOD MENU** on the player, and mods can be added, updated or removed without flashing new firmware.
+
+The **OQ Mods Patcher** (macOS and Windows) handles both:
+
+- **Mods tab** — reads the live mod list from this repository (`mods/`), shows the version on your USB stick next to the latest one, and installs or updates the mods you tick. Older versions can be picked from each mod's version menu, **Changelog** shows what changed in every version, and **?** describes the mod. Mods new to a stick start switched off; your mod settings are kept.
+- **Firmware tab** — lists the released firmware versions with their changelogs and shows which firmware your player runs. It downloads the firmware patch and writes the update to your USB stick, made from your official `OPUSQUADv132.UPD` on your own computer.
 
 > **Use this firmware at your own risk.** I have flashed firmware on my OPUS-QUAD many times—well over a hundred—and have always been able to recover from failed attempts by restoring stock firmware. That is my experience, not a guarantee: a failed flash could still leave your unit unusable, and recovery may not work for everyone. Keep a known-good official stock 1.32 update available on a separate USB, use reliable power, and never interrupt an update. Use only with an OPUS-QUAD and the exact official 1.32 update file accepted by the patcher. I have tested restoring stock 1.32 and installing a custom build on a physical unit; this does not guarantee every unit or future build.
 
@@ -14,13 +23,11 @@ Four native detailed waveforms in **Deck 3, Deck 1, Deck 2, Deck 4** order (the 
 
 ![Four-deck waveform layout with FX sidebar](assets/hardware-views/r71-four-deck-waveform.png)
 
-### Side screen now playing
+### TYTO's Side Screen View
 
-The side displays become FLX10-style deck views: Decks 1/3 on the left, 2/4 on the right. Each deck shows a scrolling waveform with its beat grid, hot cues, memory cues and loops in their rekordbox colors, plus BPM, pitch, key, remaining time, and the track title and artist. Four zoom levels, from Wide (19 s) to Tight (2.4 s).
+CDJ-3000 style side screens by **TYTO**: each side display shows the selected deck's scrolling waveform with beat grid, hot cues and memory cues, the cover art, title, key, tempo, BPM and remaining time, plus the master deck's waveform above it. The master deck is marked with an orange **MASTER PLAYER** badge. The view follows Light Mode and Hide Track Name. The previous FLX10-style view is still available as the **Side Screen Waveforms (Legacy)** mod.
 
-![Side screen now playing](assets/r93/side-now-playing.png)
-
-![Side Screen Now Playing settings](assets/r93/menu-now-playing.png)
+![TYTO's Side Screen View](assets/tyto-side-screen.png)
 
 ### Browse from the side screens
 
@@ -28,7 +35,7 @@ Hold a deck selector to open that deck's side-screen browser. Browse USB → pla
 
 ![Side-screen browser with title, artist, BPM and key](assets/r93/side-browser.png)
 
-### Stems (Experimental)
+### Stems
 
 Mute VOCAL, INST, BASS and DRUMS per deck in real time from the touch screen. Make the stems on a computer (Demucs or the AZ-MODS app) and put them on the USB as `STEMS/<track file name>/vocals.ogg other.ogg bass.ogg drums.ogg`. Tap **STEMS** at the top of the WAVEFORM screen to open the buttons: a strip under the waveforms in 2 DECK, and above the channel select row in 4 DECK. Tempo, key and scratching still apply. The first load of a track takes a few seconds while its stems are decoded.
 
@@ -38,13 +45,13 @@ Mute VOCAL, INST, BASS and DRUMS per deck in real time from the touch screen. Ma
 
 ### Light Mode
 
-An alternate, softer interface palette that keeps the four-deck layout and the right-side FX panel.
+An alternate, softer interface palette that keeps the four-deck layout and the right-side FX panel, including the mixer and MIC panels and the deck input menu. A blue-waveform palette is available.
 
 ![Light Mode four-deck waveform view](assets/hardware-views/four-deck-fx-light.png)
 
-### Gated Hot Cues
+### Gate Cues
 
-Hold a hot cue to audition it; releasing returns to the cue point and stops playback unless PLAY was pressed while the cue was held. A quick toggle is available in the Beat FX sidebar.
+On a paused deck, hold a hot cue to audition it; releasing returns to the cue point and stops playback unless PLAY was pressed while the cue was held. A quick toggle is available in the Beat FX sidebar.
 
 ![Gated Hot Cues settings](assets/hardware-views/gated-hot-cues.png)
 
@@ -66,7 +73,7 @@ Named, color-aware USB shortcuts near the waveform header; the active USB is hig
 
 ![Quick USB Access settings](assets/hardware-views/r71-quick-usb-access.png)
 
-### Zone Continuous Play
+### Continuous Zone Playback
 
 With ZONE output on and assigned to channel 3 or 4, that deck loads and plays the next track of its playlist when a track ends, whatever the global Continue/Single setting. Other decks are unchanged.
 
@@ -80,53 +87,60 @@ Optional jog-ring effects—Rainbow, Color Steps, Breathe, Police, Color Flash a
 
 ## Included mods
 
-Enable or configure these from the on-device **OQ Mods** menu (SOURCE > MOD MENU). Most are off by default.
+Install them with the OQ Mods Patcher, then switch them on and configure them in **ROBS MOD MENU** (SOURCE > ROBS MOD MENU). Mods start switched off.
 
-- **4-Deck Waveform** — four full-height native waveform lanes, in mixer order (3 / 1 / 2 / 4) or deck order (1 / 2 / 3 / 4). The stock 2 DECK and 2/4 DECK layouts remain available.
-- **Side Screen Now Playing** — FLX10-style deck views on the side displays: waveform, beat grid, hot cues, memory cues and loops, BPM, pitch, key, remaining time, title and artist. Four zoom levels. Needs Side Screen Browser on.
+- **4-Deck Waveforms** — four full-height native waveform lanes, in mixer order (3 / 1 / 2 / 4) or deck order (1 / 2 / 3 / 4), with smoothing modes (Native Height 30 is the default and recommended) and optional track overviews. The stock 2 DECK and 2/4 DECK layouts remain available.
+- **TYTO's Side Screen View** — CDJ-3000 style side screens with the selected and master deck waveforms, cover art and track information.
 - **Side Screen Browser** — a deck-specific browser on the side displays. Browse USBs, playlists and tracks (with artist, BPM and key) and confirm to load. Beat-loop wheels by default, with deck-button and track-search-button schemes available. Stock Load Lock is required.
-- **Quick USB Access** — named, color-aware on-screen USB shortcuts that open the selected source in its native browser; the active one is highlighted.
-- **Light Theme** — alternate light palettes, including a blue-waveform option.
-- **Smooth Waveforms** — Native Height 30 (default and recommended), Stock, Smooth 30 and 60 FPS.
-- **FX Frequency** — LOW | ALL | HIGH for Beat FX, kept across effect changes.
-- **Beat FX Sidebar** — the Beat FX panel at the right of the main waveform screen in every deck tab. It steps aside for the INPUT, crossfader, MIC and track-info pop-ups.
-- **FX Target Knob** — turn the Beat FX TIME knob to step through MIC, Deck 3, Deck 1, Deck 2, Deck 4 and MASTER, with one to five detents per target (three by default). Hold SHIFT while turning TIME for normal effect-time adjustment.
+- **Stems** — real-time VOCAL / INST / BASS / DRUMS mutes per deck from pre-made stem files. Based on the AZ-MODS stems engine.
+- **Light Mode** — light interface palettes, including a blue-waveform option. Also changes TYTO's side-screen waveforms.
+- **Quick USB** — named, color-coded on-screen USB shortcuts that open the selected source in its native browser; the active one is highlighted.
+- **Beat FX Sidebar** — the Beat FX panel at the right of the main waveform screen in every layout. It steps aside for the INPUT, crossfader, MIC, FX list and track-info pop-ups.
+- **FX Frequency** — LOW | ALL | HIGH for Beat FX, kept across effect changes. Needs Beat FX Sidebar.
+- **FX Knob Selector** — turn the Beat FX TIME knob to step through MIC, Deck 3, Deck 1, Deck 2, Deck 4 and MASTER, with one to five detents per target (three by default). Hold SHIFT while turning TIME for normal effect-time adjustment.
+- **Gate Cues** — on a paused deck, hold a hot cue to audition it; release returns to the cue point unless PLAY was pressed while holding. Quick toggle in the FX sidebar.
 - **Slip Mode** — the Slip Reverse control toggles Slip per deck, with LED feedback.
-- **Gated Hot Cues** — hold a hot cue for gated playback; release returns to the cue point unless PLAY was pressed while holding. Quick toggle in the FX sidebar.
+- **Playlist Editing** — reorder the tracks of a USB playlist in main Browse: hold the browse knob on a track, turn to move it, press to drop, then BACK to save. This writes the USB library; the first save each boot backs up `exportLibrary.db` and `export.pdb` to `OPUSMOD_BACKUP` on that USB. Use it with a USB you have a copy of.
 - **Party Mode** — jog-ring effects and speed settings described above.
-- **Hide Track Names** — an eye on each track box in the 2 DECK tab hides that deck's title and artist on the main screen and on the side screens. Tap it again to show them.
-- **Zone Continuous Play** — the zone deck (channel 3 or 4) plays on through its playlist.
-- **Stems (Experimental)** — real-time VOCAL / INST / BASS / DRUMS mutes per deck from pre-made stem files. Based on the AZ-MODS stems engine.
-- **Playlist Editing (Experimental)** — reorder the tracks of a USB playlist in main Browse: hold the browse knob on a track, turn to move it, press to drop, then BACK to save. This writes the USB library; the first save each boot backs up `exportLibrary.db` and `export.pdb` to `OPUSMOD_BACKUP` on that USB. Use it with a USB you have a copy of.
-- **Persistent settings** — mod settings are stored in `OPUSMOD_SETTINGS.cfg` on the USB. The patcher preserves an existing settings file and creates a default one only if it is missing.
+- **Hide Track Name** — an eye on each track box hides that deck's title and artist on the main screen and on the side screens, including TYTO's. Tap it again to show them.
+- **Continuous Zone Playback** — the zone deck (channel 3 or 4) plays on through its playlist.
+- **Side Screen Waveforms (Legacy)** — the original FLX10-style side-screen view: waveform, cues, loops, BPM, key and time. Needs Side Screen Browser.
+- **Persistent settings** — mod switches are stored in `MODS/state.txt` and each mod's options in `MODS/<mod>/settings.txt` on the USB; general settings in `OPUSMOD_SETTINGS.cfg`. The patcher keeps existing settings and creates defaults only where they are missing.
+
+Mod developers can build their own mods with the OQ Mods SDK.
 
 ## Getting started
 
-### Firmware patcher
+### Installing the firmware
 
-The macOS and Windows patchers verify the official 1.32 source locally and generate the R94 update file; they do not flash the player.
-
-![macOS firmware patcher](assets/patcher-r71-macos.png)
+The OQ Mods Patcher verifies the official 1.32 update locally and writes the modded update to your USB stick; it does not flash the player.
 
 1. Obtain the official OPUS-QUAD **1.32** update from Pioneer DJ. It is not bundled here.
-2. Download the matching Opus Quad Mods patcher for macOS or Windows from the project's **Releases** page.
-3. Open the patcher, choose the official `OPUSQUADv132.UPD`, and generate the modified update. The patcher validates the input and verifies the output locally; it does not upload firmware or flash the player.
-4. Copy the generated `OPUSQUADv132.UPD` to the root of a dedicated update USB. Keep the stock 1.32 update on a separate, clearly labeled recovery USB.
-5. With the unit powered off, hold **BEAT SYNC** and **MASTER** on the right deck while powering it on to enter the update screen. Follow the on-screen instructions. Do not power off or remove the USB during the update. R94 also updates the side-screen controller, so the update takes about a minute longer than a stock update.
-6. After reboot, open the on-device OQ Mods menu and enable the features you want. Keep `OPUSMOD_SETTINGS.cfg` on the USB whose settings you want to use. **Settings > General > Version No.** shows **1.32X R94**.
+2. Download the **OQ Mods Patcher** for macOS (Apple Silicon or Intel) or Windows from the project's **Releases** page.
+3. Plug in your USB stick and open the patcher. On the **Firmware** tab, choose the official `OPUSQUADv132.UPD` (the patcher remembers it), pick the firmware version (the latest is selected), and click **Download and write to USB**. The patch is downloaded, checked and applied on your computer, and the result is verified before it is written as `OPUSQUADv132.UPD` to the root of the stick. Keep the stock 1.32 update on a separate, clearly labeled recovery USB.
+4. With the unit powered off, hold **BEAT SYNC** and **MASTER** on the right deck while powering it on to enter the update screen. Follow the on-screen instructions. Do not power off or remove the USB during the update. When the side-screen controllers are updated too, the update takes about a minute longer than a stock update.
+5. After reboot, **Settings > General > Version No.** shows **1.32X R120**, and the start-up screen shows **ROBS MOD 1.32X R120** in the bottom-right corner.
 
-The standalone patchers are versioned independently from the firmware. Confirm the patcher version and R94 build details in the matching release notes before generating an update.
+### Installing and updating mods
+
+1. Open the patcher with your settings USB plugged in and go to the **Mods** tab. Each mod shows the version on your stick and the latest version.
+2. Tick the mods you want (**Select all**, or **Select updates** for everything with a newer version), optionally pick a version, and click **Install**.
+3. On the player, open **ROBS MOD MENU** and switch the new mods on.
+
+Mods can also be installed by hand: unzip `mods/<mod>/versions/<version>/<mod>.zip` from this repository into `MODS/<mod>/` on the USB.
 
 ## Roadmap
 
 - One-touch beat-grid ×2 / ÷2
 - Cover art in the side-screen browser
+- Jog ring brightness
 - Live Bluetooth deck with a recorded waveform (OMNIS-DUO style)
 - Full PRO DJ LINK support
 - Smaller system-wide font options
 
 ## Credits
 
+- **TYTO** — creator of TYTO's Side Screen View.
 - **Kyle Hosman** — creator of the XDJ-AZ Mods project, whose public work provided valuable reference and inspiration. The stems engine is a port of the AZ-MODS stems engine (GPL-3.0); its source is published with each release that includes it.
 - **LycheeAPPF, Tratosca and Sam Leone** — guidance and knowledge shared during development.
 - The OPUS-QUAD community and everyone who tested builds and reported results.
