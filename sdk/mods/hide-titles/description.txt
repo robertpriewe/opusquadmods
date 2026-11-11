@@ -1,0 +1,3 @@
+Hide track names on the main display and compatible
+TYTO side screens. Use the eye controls to reveal or
+hide names while keeping the other deck information.

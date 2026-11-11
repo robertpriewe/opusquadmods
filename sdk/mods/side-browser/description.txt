@@ -1,0 +1,4 @@
+Hold Deck Select for one second to browse USB playlists
+and tracks on that side. Choose a control scheme below.
+Beat Loop: turn to scroll, press to open, hold to go back.
+Closes after loading. Enable native LOAD LOCK for safety.

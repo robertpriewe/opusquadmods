@@ -1,0 +1,4 @@
+Automatically start the next track on the deck assigned
+to ZONE playback. Choose the ZONE assignment using
+the normal controls. Disable this mod to restore
+the stock continuation behavior.

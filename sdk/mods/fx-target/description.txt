@@ -1,0 +1,4 @@
+Turn Beat FX TIME to select MIC / 3 / 1 / 2 / 4 / MASTER.
+Choose how many detents move to the next target.
+Hold SHIFT while turning TIME to change effect time.
+The FX SELECT knob keeps its normal function.

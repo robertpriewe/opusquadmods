@@ -1,0 +1,3 @@
+Use a light interface for bright environments.
+Choose the normal or blue waveform palette below.
+Also updates compatible TYTO side-screen waveforms.

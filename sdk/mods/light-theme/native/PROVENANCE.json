@@ -1,0 +1,9 @@
+{
+  "source": "Existing OPUS lightmode.c and GPL AZ-derived adapter; no vendor firmware extracted",
+  "changes": "X11 repaint helper remains generic in host; light engine otherwise copied intact",
+  "files": {
+    "lightmode.c": "541fff2c14969616d04052c21716edd2234c262acc3d9c003a9466188a019790",
+    "lightmode.h": "8d2ecc89ff55831b63c0cfe9a15c49b9895fce3bea7f531dbaaf1e2085ea864a",
+    "az_day_native.inc": "b6fb896d6bd3ca6cb6643f218a40c2eeecb6983ee7b22c03feb1570895d409aa"
+  }
+}

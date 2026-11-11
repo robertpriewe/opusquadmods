@@ -1,0 +1,4 @@
+Edit track order from the main-screen playlist browser.
+Hold the main browse knob on a playlist track to open
+the editing controls. Changes apply to the USB library;
+keep a backup of your export before editing.

@@ -1,0 +1,4 @@
+Keep effect name, BPM, beat and time visible beside
+the waveforms in all layouts. Native popups stay above it.
+Enable this sidebar to use the FX Frequency controls
+and the optional Gate Cues quick toggle.

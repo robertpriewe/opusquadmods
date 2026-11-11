@@ -1,0 +1,4 @@
+Choose 2 DECK, 2/4 DECK or four native waveform lanes.
+Set smoothing here: Native Height 30 is the default and
+recommended mode for smooth four-deck playback.
+Lane order and track overviews can also be changed.

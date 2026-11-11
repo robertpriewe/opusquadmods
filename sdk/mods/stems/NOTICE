@@ -1,0 +1,34 @@
+AZ-MODS source
+Copyright (C) 2026 Kyle Hosman
+
+This program is free software: you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation, version 3 (GPL-3.0-only). See LICENSE.
+
+AZ-MODS is not affiliated with, endorsed by, or supported by AlphaTheta
+Corporation or Pioneer DJ. No part of the deck's firmware is included here.
+
+Third-party parts
+-----------------
+
+src/azstem/stb_vorbis.c
+  stb_vorbis v1.22 by Sean Barrett. Public domain or MIT, at your choice (see the
+  end of the file).
+
+deck/lib/dropbear (release sets only; built by deck/dropbear/build-dropbear.sh)
+  Dropbear SSH server by Matt Johnston and contributors, MIT-style licenses. The
+  full text ships beside the binary as deck/lib/dropbear.LICENSE.
+
+src/azmod/icons/ and the icon bitmaps in src/azmod/menu_icons.h
+  Sources and SHA-256 of every file are in src/azmod/icons/SOURCES.txt.
+  - cil-*.svg: CoreUI Icons Free 3.0.1 by creativeLabs Lukasz Holeczek, CC BY 4.0
+    (src/azmod/icons/LICENSE-COREUI-ICONS), https://github.com/coreui/coreui-icons
+  - waveform-svgrepo.svg: "waveform" from Framework7 Icons by Vladimir Kharlampidi,
+    MIT (src/azmod/icons/LICENSE-FRAMEWORK7-ICONS),
+    https://github.com/framework7io/framework7-icons
+  - info-circle-svgrepo.svg: "info circle" (outline) from the Solar icon set by
+    480 Design, CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/),
+    https://www.figma.com/community/file/1166831539721848736
+  - drum.svg and gauge.svg: drawn for this project, GPL-3.0-only like the rest of
+    the source.
+  The icon bitmaps are 96x96 coverage maps rendered from these files.

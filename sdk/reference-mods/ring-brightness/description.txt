@@ -1,0 +1,3 @@
+Dim both jog rings to 75, 50, 25 or 10 percent of their normal
+brightness. Works with deck colours, Party Mode and other mods.
+Needs firmware R121 or later.

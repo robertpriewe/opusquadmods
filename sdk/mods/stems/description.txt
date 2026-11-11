@@ -1,0 +1,4 @@
+Control prepared stems independently for each deck.
+Use compatible pre-generated stem files on the USB.
+Enable the mod, load a prepared track and use the
+on-screen stem controls to mute or restore parts.

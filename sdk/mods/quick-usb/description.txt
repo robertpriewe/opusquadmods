@@ -1,0 +1,4 @@
+Show named, colour-coded USB shortcuts above the
+waveforms. Tap a drive to open its native browser.
+The active source is highlighted; tapping does not
+load a track into a deck.

@@ -1,0 +1,4 @@
+Choose LOW, ALL or HIGH to select the frequency range
+used by the filter-assisted Beat FX controls.
+Beat FX Sidebar must be enabled to show the buttons.
+This does not add an independent three-band master EQ.

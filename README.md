@@ -109,7 +109,7 @@ Install them with the OQ Mods Patcher, then switch them on and configure them in
 - **Side Screen Waveforms (Legacy)** — the original FLX10-style side-screen view: waveform, cues, loops, BPM, key and time. Needs Side Screen Browser.
 - **Persistent settings** — mod switches are stored in `MODS/state.txt` and each mod's options in `MODS/<mod>/settings.txt` on the USB; general settings in `OPUSMOD_SETTINGS.cfg`. The patcher keeps existing settings and creates defaults only where they are missing.
 
-Mod developers can build their own mods with the OQ Mods SDK.
+Mod developers can build their own mods with the [OQ Mods SDK](sdk/): headers, API reference, build tools, examples and the source of the mods listed above (except TYTO's Side Screen View).
 
 ## Getting started
 

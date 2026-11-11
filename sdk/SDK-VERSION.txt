@@ -1,0 +1,9 @@
+OQ Mods SDK 1.7.0 (firmware R121, internal revision 7762)
+1.7: ring_brightness() jog ring dimming (R121)
+1.6: read-only master feed opusmod_master_audio_api_v1 and oq_master_audio_discover_tap() (R118)
+API version 1, append-only; full reference in API-REFERENCE.md
+1.5: per-folder menu.title, version.txt, description.txt (R116); choices.order and 64-byte choice labels (R117); opusmod_title_hidden export (R115)
+1.4: menu actions, diagnostic save/status, diagnostics.only (R114)
+1.3: external feature engines: surfaces, panels, USB sources, analysis, providers (R113)
+1.2 / 1.2.1: named native services, protocol 2 acknowledgements (R111 / R112)
+Not hardware-verified as a whole; see the release notes for what has been tested on the deck

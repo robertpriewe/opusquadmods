@@ -1,0 +1,4 @@
+Replace each deck's Slip Reverse control with Slip.
+Playback continues in the background during scratching;
+release to resume at the continuing playback position.
+Flashing deck LEDs indicate that Slip is active.
