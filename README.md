@@ -123,6 +123,8 @@ The OQ Mods Patcher verifies the official 1.32 update locally and writes the mod
 
 ### Installing and updating mods
 
+![OQ Mods Patcher: Mods tab](assets/patcher-mods-tab-macos.png)
+
 1. Open the patcher with your settings USB plugged in and go to the **Mods** tab. Each mod shows the version on your stick and the latest version.
 2. Tick the mods you want (**Select all**, or **Select updates** for everything with a newer version), optionally pick a version, and click **Install**.
 3. On the player, open **ROBS MOD MENU** and switch the new mods on.
