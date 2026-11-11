@@ -1,5 +1,7 @@
 # Robs Opus Quad Mods
 
+[![Join the Discord](https://img.shields.io/badge/Discord-Join%20the%20community-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/PsJAbmZgD)
+
 **The first custom firmware for the Pioneer OPUS-QUAD.**
 
 Robs Opus Quad Mods is a custom-firmware project for the OPUS-QUAD, based on official firmware **1.32**.
