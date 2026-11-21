@@ -118,7 +118,7 @@ Install them with the OQ Mods Patcher, then switch them on and configure them in
 - **ROBS MOD MENU** — hold SOURCE for about a second and let go to open it; it reopens on the item you used last.
 - **Persistent settings** — mod switches are stored in `MODS/state.txt` and each mod's options in `MODS/<mod>/settings.txt` on the USB; general settings in `OPUSMOD_SETTINGS.cfg`. The patcher keeps existing settings and creates defaults only where they are missing.
 
-Mod developers can build their own mods with the [OQ Mods SDK](sdk/): headers, API reference, build tools, examples and the source of the mods listed above (except TYTO's mods and the two Experimental mods).
+Mod developers can build their own mods with the [OQ Mods SDK](sdk/): headers, API reference, build tools, examples and the source of the mods listed above (except TYTO's mods).
 
 ## Getting started
 

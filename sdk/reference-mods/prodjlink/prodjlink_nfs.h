@@ -190,7 +190,12 @@ static int ln_mount(uint32_t proc,struct ln_buf *in,struct ln_buf *out) {
     }
     if(proc==1) {
         uint32_t n;const unsigned char *path=ln_get_opaque(in,&n,1024);if(in->bad)return 4;
-        char p[64];snprintf(p,sizeof p,"%.*s",(int)(n<63?n:63),(const char *)path);
+        /* CDJs send the path as UTF-16LE ("/\0C\0/\0"), like file names; the XDJ's own
+         * server refuses a plain-ASCII "/C/" (checked 2026-11-11), so accept both. */
+        char p[64];unsigned k=0;
+        int wide=n>=2&&!(n&1)&&path[0]&&!path[1];
+        for(uint32_t i=0;i<n&&k+1<sizeof p;i+=wide?2:1){if(!path[i]||(wide&&path[i+1]))break;p[k++]=(char)path[i];}
+        p[k]=0;
         int usb=!strcmp(p,"/C/")||!strcmp(p,"/C")||!strcmp(p,"/");
         if(!usb||(!ln_root[0]&&!ln_find_root())) {
             ln_put(out,usb?LN_NOENT:LN_ACCES);
@@ -298,6 +303,10 @@ static void ln_one(int k) {
     int r=k==0?ln_portmap(proc,&in,&out):k==1?ln_mount(proc,&in,&out):ln_nfs(proc,&in,&out);
     if(r){out.n=status_at;ln_put(&out,(uint32_t)r);}   /* PROC_UNAVAIL / GARBAGE_ARGS */
     ln_calls[k]++;
+    {   /* every call, for the hardware tests (the log itself is capped) */
+        static unsigned logged;uint32_t st=out.n>status_at+4?(uint32_t)out.p[status_at+4]<<24|(uint32_t)out.p[status_at+5]<<16|(uint32_t)out.p[status_at+6]<<8|out.p[status_at+7]:0;
+        if(ln_log&&logged++<400)ln_log("nfs: %s proc %u from %s -> reply %u bytes, status %u",k==0?"portmap":k==1?"mount":"nfs",proc,inet_ntoa(from.sin_addr),(unsigned)out.n,r?(unsigned)r:st);
+    }
 send:
     if(out.bad){ln_errors++;return;}
     sendto(ln_sock[k],rep,out.n,0,(struct sockaddr *)&from,fl);

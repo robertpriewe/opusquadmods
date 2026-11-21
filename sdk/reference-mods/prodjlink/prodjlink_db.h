@@ -1,5 +1,6 @@
 #ifndef OQ_PRODJLINK_DB_H
 #define OQ_PRODJLINK_DB_H
+static void lp_log(const char *fmt,...);   /* prodjlink_probe.h */
 /* Pro DJ Link stage 3: ask a player's dbserver for a track's beat grid and waveform,
  * as a player does (port query on TCP 12523, then the dbserver session). Plain POSIX,
  * blocking with timeouts; meant for a worker thread. Message layout as prodjlink-lab/
@@ -16,6 +17,7 @@
 #include <sys/socket.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <poll.h>
 
 #ifndef MSG_NOSIGNAL
 #define MSG_NOSIGNAL 0   /* macOS (the Mac-side check); Linux has it */
@@ -27,10 +29,17 @@ struct lkdb_msg {uint32_t txn,kind,count;uint32_t num[LKDB_ARGS];unsigned char *
 struct lkdb_beat {uint16_t beat_in_bar,tempo_x100;uint32_t time_ms;};
 
 static void lkdb_free(struct lkdb_msg *m) {for(unsigned i=0;i<LKDB_ARGS;i++){free(m->blob[i]);m->blob[i]=0;m->blob_len[i]=0;}}
+/* 1.67: set while the mod talks over EP136's own (maybe non-blocking) socket: wait for it */
+static __thread int lkdb_wait_ms;
 static int lkdb_io(int s,void *buf,size_t n,int send_it) {
     unsigned char *p=buf;
     while(n) {
         ssize_t r=send_it?send(s,p,n,MSG_NOSIGNAL):recv(s,p,n,0);
+        if(r<0&&(errno==EAGAIN||errno==EWOULDBLOCK)&&lkdb_wait_ms>0) {
+            struct pollfd pf={s,(short)(send_it?POLLOUT:POLLIN),0};
+            if(poll(&pf,1,lkdb_wait_ms)>0)continue;
+            return -1;
+        }
         if(r<=0){if(r<0&&errno==EINTR)continue;return -1;}
         p+=r;n-=(size_t)r;
     }
@@ -129,12 +138,17 @@ static int lkdb_anlz_tag(int s,unsigned as_player,unsigned slot,uint32_t track,c
     uint32_t t=(uint32_t)tag[0]|(uint32_t)tag[1]<<8|(uint32_t)tag[2]<<16|(uint32_t)tag[3]<<24;
     uint32_t e=(uint32_t)ext[0]|(uint32_t)ext[1]<<8|(uint32_t)ext[2]<<16;
     uint32_t a[4]={lkdb_rmst(as_player,8,slot),track,t,e};struct lkdb_msg r;*out=0;*len=0;
-    if(lkdb_request(s,2,0x2c04,a,4)||lkdb_response(s,&r))return -1;
+    if(lkdb_request(s,2,0x2c04,a,4)){lp_log("anlz %.4s.%.3s track %u: request not sent",tag,ext,track);return -1;}
+    if(lkdb_response(s,&r)){lp_log("anlz %.4s.%.3s track %u: no reply",tag,ext,track);return -1;}
     int ok=-1;
     if(r.kind==0x4f02&&r.blob[3]&&r.blob_len[3]>8&&!memcmp(r.blob[3]+4,tag,4)) {
         *len=r.blob_len[3]-4;*out=malloc(*len);
         if(*out){memcpy(*out,r.blob[3]+4,*len);ok=0;}
     }
+    /* 1.65: what the player answered (prefix bytes show its byte order) */
+    {static unsigned said;if(said<24){said++;const unsigned char *b=r.blob[3];
+        lp_log("anlz %.4s.%.3s track %u: reply %04x args %u [%x %x %x] blob %u prefix %02x%02x%02x%02x %.4s -> %s",tag,ext,track,r.kind,r.count,r.num[0],r.num[1],r.num[2],r.blob_len[3],
+            b&&r.blob_len[3]>3?b[0]:0,b&&r.blob_len[3]>3?b[1]:0,b&&r.blob_len[3]>3?b[2]:0,b&&r.blob_len[3]>3?b[3]:0,b&&r.blob_len[3]>8?(const char *)b+4:"----",ok?"failed":"ok");}}
     lkdb_free(&r);return ok;
 }
 /* Classic blue waveform detail (0x2904 -> 0x4a02): 19 lead bytes, then 1 byte per column. */

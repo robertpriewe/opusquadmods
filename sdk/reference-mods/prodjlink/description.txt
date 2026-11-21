@@ -1,0 +1,2 @@
+EXPERIMENTAL: joins the DJ Link network on the LAN port as a free player (1-4).
+Keeps logs in MODS/prodjlink/logs: send that folder with any problem report.
