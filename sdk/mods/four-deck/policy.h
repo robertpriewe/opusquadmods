@@ -64,7 +64,7 @@ static int layout_fast_repair(void *view) {
                    comp_visible_now(g_fx_sidebar.time)==comp_visible_now(g_fx_sidebar.percent)))
         return 0;
     for(int i=0;i<8;i++)
-        if(g_mixer_parts[i] && comp_visible_now(g_mixer_parts[i]))return 0;
+        if(g_mixer_parts[i] && comp_visible_now(g_mixer_parts[i]) && !(arrows_active() && is_class(g_mixer_parts[i],CHW_CLASS)))return 0;
     for(int i=0;i<4;i++) {
         if(*(void **)((char *)view+lane_field[i])!=g_fast_lane_obj[i] ||
            *(void **)(g_fast_parts.dif+DIF_CARD0+8*i)!=g_fast_parts.card_obj[i])
@@ -80,6 +80,7 @@ static int layout_fast_repair(void *view) {
     comp_bounds(g_fast_parts.prev,0,PREV4_Y,1280,204);
     comp_visible(g_fast_parts.prev,layout_cfg.overviews);
     if(sidebar)fx_sidebar_show();
+    if(arrows_active())mixer_arrows(g_fast_mixer);   /* 2.3: follow the menus every frame */
     return 1;
 }
 static int layout_converge(void *view) {

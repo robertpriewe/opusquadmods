@@ -11,6 +11,6 @@ static inline unsigned fx_frequency_select(unsigned current,unsigned button) {
 }
 /* What the selected range does, for the box heading. */
 static inline const char *fx_frequency_caption(unsigned current) {
-    return current==FX_LOW?"FX: LOWS ONLY":current==FX_HIGH?"FX: HIGHS ONLY":"FX: FULL RANGE";
+    return current==FX_LOW?"FX: LOW PASS":current==FX_HIGH?"FX: HIGH PASS":"FX: FULL RANGE";
 }
 #endif

@@ -1,22 +1,32 @@
 {
   "format": 1,
-  "updated": "2026-11-09",
+  "updated": "2026-11-20",
   "mods": [
     {
       "folder": "four-deck",
       "title": "4-Deck Waveforms",
       "description": "Choose 2 DECK, 2/4 DECK or four native waveform lanes.\nSet smoothing here: Native Height 30 is the default and\nrecommended mode for smooth four-deck playback.\nLane order and track overviews can also be changed.",
       "order": 10,
-      "min_firmware": "R117",
-      "latest": "2.2",
+      "min_firmware": "R120",
+      "latest": "2.6",
       "versions": [
+        {
+          "version": "2.6",
+          "date": "2026-11-16",
+          "path": "four-deck/versions/2.6/four-deck.zip",
+          "size": 11915,
+          "sha256": "ec99731114ba809592f62543057829a612b0bedeb8f57d9b3b04436904b82277",
+          "changelog": "- Layout updates for the channel input display in the 4-deck view.",
+          "min_firmware": "R120"
+        },
         {
           "version": "2.2",
           "date": "2026-11-09",
           "path": "four-deck/versions/2.2/four-deck.zip",
           "size": 10471,
           "sha256": "ee8672656a9542ec023d03b9405d6c7b800735e689f9e53119e780caac031174",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -25,16 +35,54 @@
       "title": "TYTO's Side Screen View",
       "description": "Show the selected deck and master waveforms on each\nside screen, with artwork and track information.\nThe master player uses an orange MASTER PLAYER badge.\nFollows Light Mode and Hide Track Name settings.",
       "order": 20,
-      "min_firmware": "R117",
-      "latest": "2.2",
+      "min_firmware": "R120",
+      "latest": "3.7.3",
       "versions": [
+        {
+          "version": "3.7.3",
+          "date": "2026-11-16",
+          "path": "tyto-sidescreen/versions/3.7.3/tyto-sidescreen.zip",
+          "size": 404788,
+          "sha256": "b914c770fd19eb77ea8a6b4ee8c0e599e3939366657f3eaea510883ac4d8efe6",
+          "changelog": "- TYTO's new 3.7 build: smoother side-screen updates and less work for the main screen while nothing changes.",
+          "min_firmware": "R120"
+        },
         {
           "version": "2.2",
           "date": "2026-11-09",
           "path": "tyto-sidescreen/versions/2.2/tyto-sidescreen.zip",
           "size": 322920,
           "sha256": "c888522918f340c44b0e8075008314e7c5706f1ea1e011979c3d7a666343e94c",
-          "changelog": "- CDJ-3000 style side screens with artwork, track info and a MASTER PLAYER badge on the master deck."
+          "changelog": "- CDJ-3000 style side screens with artwork, track info and a MASTER PLAYER badge on the master deck.",
+          "min_firmware": "R120"
+        }
+      ]
+    },
+    {
+      "folder": "deck-highlight",
+      "title": "TYTO's Deck Highlight",
+      "description": "Highlights active Decks around the decks.\nColor is based on the Deck color.\nCan dim non active decks.",
+      "order": 23,
+      "min_firmware": "R120",
+      "latest": "1.5",
+      "versions": [
+        {
+          "version": "1.5",
+          "date": "2026-11-15",
+          "path": "deck-highlight/versions/1.5/deck-highlight.zip",
+          "size": 18299,
+          "sha256": "f8c400a69062015461ae188503ee3df82389e144a2f8aa26bb184e91a828271e",
+          "changelog": "- The outline takes the deck colour live from the deck's indicator lights.\n- Dimming inactive waveforms uses less memory and works on more screens.",
+          "min_firmware": "R120"
+        },
+        {
+          "version": "1.3",
+          "date": "2026-11-15",
+          "path": "deck-highlight/versions/1.3/deck-highlight.zip",
+          "size": 13498,
+          "sha256": "c358924f3000931b848d9b9d660e260f2dec6775bbcbea41479f7197b5327656",
+          "changelog": "- Outlines the selected decks' waveform rows in the deck colour.\n- Outline size 1-5 px and transparency 10-100%.\n- Optional: dim the big waveforms of decks that aren't selected to 30%.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -43,34 +91,54 @@
       "title": "Side Screen Browser",
       "description": "Hold Deck Select for one second to browse USB playlists\nand tracks on that side. Choose a control scheme below.\nBeat Loop: turn to scroll, press to open, hold to go back.\nCloses after loading. Enable native LOAD LOCK for safety.",
       "order": 30,
-      "min_firmware": "R117",
-      "latest": "2.0",
+      "min_firmware": "R122",
+      "latest": "2.3",
       "versions": [
+        {
+          "version": "2.3",
+          "date": "2026-11-16",
+          "path": "side-browser/versions/2.3/side-browser.zip",
+          "size": 13729,
+          "sha256": "7f79f7514c4d1605a1ecce6838ef6a011e26300cf76ec2a060b6ed4e3a901e49",
+          "changelog": "- Tracks with prepared stems are marked (STEMS).\n- The first page after reopening shows the full track info straight away.",
+          "min_firmware": "R122"
+        },
         {
           "version": "2.0",
           "date": "2026-11-09",
           "path": "side-browser/versions/2.0/side-browser.zip",
           "size": 12895,
           "sha256": "c0e10345828501bdff8a8959e36d0cb888223e37ea8f511d70047c0d36260e9f",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
     {
       "folder": "stems",
       "title": "Stems",
-      "description": "Control prepared stems independently for each deck.\nUse compatible pre-generated stem files on the USB.\nEnable the mod, load a prepared track and use the\non-screen stem controls to mute or restore parts.",
+      "description": "Control prepared stems independently for each deck.\nChannel 3/4 knobs set deck 1/2 stem volume, in button order:\nTRIM vocals, HI instruments, MID bass, LOW drums.",
       "order": 40,
-      "min_firmware": "R117",
-      "latest": "2.0",
+      "min_firmware": "R122",
+      "latest": "3.0",
       "versions": [
+        {
+          "version": "3.0",
+          "date": "2026-11-20",
+          "path": "stems/versions/3.0/stems.zip",
+          "size": 107980,
+          "sha256": "094b2b65277ea46005aa89c028fbe83d1cf10bd2a3a636b658d44b304ed9f211",
+          "changelog": "- The channel 3/4 TRIM, HI, MID and LOW knobs set the stem volumes of decks 1/2 (TRIM vocals, HI instruments, MID bass, LOW drums).\n- The stem buttons show each stem's volume; a centre click restores full volume.\n- Tracks with prepared stems get a STEMS icon in the main browser, also when the stem folder is named \"Artist - Title\" or the file name was shortened.\n- Fixed: a deck could play another deck's stems after a new track was loaded.",
+          "min_firmware": "R122"
+        },
         {
           "version": "2.0",
           "date": "2026-11-09",
           "path": "stems/versions/2.0/stems.zip",
           "size": 103739,
           "sha256": "36fa33a6b39112a081d32ebfd7b69d7c57bb56c737bbca3e8f0d9571910d6a74",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -79,34 +147,54 @@
       "title": "Light Mode",
       "description": "Use a light interface for bright environments.\nChoose the normal or blue waveform palette below.\nAlso updates compatible TYTO side-screen waveforms.",
       "order": 50,
-      "min_firmware": "R117",
-      "latest": "2.2",
+      "min_firmware": "R120",
+      "latest": "2.4",
       "versions": [
+        {
+          "version": "2.4",
+          "date": "2026-11-20",
+          "path": "light-theme/versions/2.4/light-theme.zip",
+          "size": 28136,
+          "sha256": "1a8e81e9e46bf036bbd4a3ec065e56526872702de567c12e8a5ad06d1347e879",
+          "changelog": "- Loops on the main waveform are shown in a light amber instead of a dark box.\n- Tracks without artwork show a light placeholder.",
+          "min_firmware": "R120"
+        },
         {
           "version": "2.2",
           "date": "2026-11-09",
           "path": "light-theme/versions/2.2/light-theme.zip",
           "size": 26522,
           "sha256": "975bf609a0eb1173362abb70596700930f3b74c737d7d44fe4d1eca5ede44902",
-          "changelog": "- The bottom mixer and MIC panels and the deck input pop-up menu stay light."
+          "changelog": "- The bottom mixer and MIC panels and the deck input pop-up menu stay light.",
+          "min_firmware": "R120"
         }
       ]
     },
     {
       "folder": "quick-usb",
       "title": "Quick USB",
-      "description": "Show named, colour-coded USB shortcuts above the\nwaveforms. Tap a drive to open its native browser.\nThe active source is highlighted; tapping does not\nload a track into a deck.",
+      "description": "Show named, colour-coded USB shortcuts above the\nwaveforms. Tap a drive to open its native browser.\nOption: also show the LINK USBs of other Pro DJ\nLink players. Tapping does not load a track.",
       "order": 60,
-      "min_firmware": "R117",
-      "latest": "2.0",
+      "min_firmware": "R124",
+      "latest": "2.1",
       "versions": [
+        {
+          "version": "2.1",
+          "date": "2026-11-16",
+          "path": "quick-usb/versions/2.1/quick-usb.zip",
+          "size": 5565,
+          "sha256": "78e296f3d18e22a21e87e1f99d5aac5cf1d39543db7efc7d49797f23a2902583",
+          "changelog": "- Option: also show the LINK USBs of other Pro DJ Link players (LINK1-LINK4).",
+          "min_firmware": "R124"
+        },
         {
           "version": "2.0",
           "date": "2026-11-09",
           "path": "quick-usb/versions/2.0/quick-usb.zip",
           "size": 5081,
           "sha256": "3846a471a9dded641efa2699b42cbcf1f4fb497c0a4046aec75d8ac54d456623",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -115,7 +203,7 @@
       "title": "Beat FX Sidebar",
       "description": "Keep effect name, BPM, beat and time visible beside\nthe waveforms in all layouts. Native popups stay above it.\nEnable this sidebar to use the FX Frequency controls\nand the optional Gate Cues quick toggle.",
       "order": 70,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -124,25 +212,36 @@
           "path": "fx-sidebar/versions/2.0/fx-sidebar.zip",
           "size": 6499,
           "sha256": "e7c2770bcba737a3e5a4d7ebb67e302d51e7a7283e9c46af52f624d99a976ad6",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
     {
       "folder": "fx-frequency",
       "title": "FX Frequency",
-      "description": "Choose LOW, ALL or HIGH to select the frequency range\nused by the filter-assisted Beat FX controls.\nBeat FX Sidebar must be enabled to show the buttons.\nThis does not add an independent three-band master EQ.",
+      "description": "LOW or HIGH plays the Beat FX like holding the bottom\nor top of the X-PAD, at the selected beat. ALL is normal.\nBEAT FX ON switches it on and off as usual.\nBeat FX Sidebar must be enabled to show the buttons.",
       "order": 80,
-      "min_firmware": "R117",
-      "latest": "2.0",
+      "min_firmware": "R123",
+      "latest": "3.0",
       "versions": [
+        {
+          "version": "3.0",
+          "date": "2026-11-20",
+          "path": "fx-frequency/versions/3.0/fx-frequency.zip",
+          "size": 8506,
+          "sha256": "5ceee59e60e71866b87633451aed0b6e80d4c2b742c22dbc1e10b262710be541",
+          "changelog": "- LOW and HIGH play the Beat FX like holding the bottom or top of the X-PAD, and hold until BEAT FX ON is pressed.\n- BEAT < and > change the beat while LOW or HIGH is on.",
+          "min_firmware": "R123"
+        },
         {
           "version": "2.0",
           "date": "2026-11-09",
           "path": "fx-frequency/versions/2.0/fx-frequency.zip",
           "size": 5537,
           "sha256": "d8f02a82d955b286e30a2f91351c4331c735a02aa551ab9cf8cf58b2f6ac0511",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -151,7 +250,7 @@
       "title": "FX Knob Selector",
       "description": "Turn Beat FX TIME to select MIC / 3 / 1 / 2 / 4 / MASTER.\nChoose how many detents move to the next target.\nHold SHIFT while turning TIME to change effect time.\nThe FX SELECT knob keeps its normal function.",
       "order": 90,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -160,7 +259,8 @@
           "path": "fx-target/versions/2.0/fx-target.zip",
           "size": 4933,
           "sha256": "d14864eac9fc85627e28741cdc0d2d00ae4ac1fef64a31c9bf941acefdd911ac",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -169,7 +269,7 @@
       "title": "Gate Cues",
       "description": "On paused decks, hold a hot cue to audition it.\nReleasing a cue stops and returns to its cue point.\nPress PLAY while holding to latch normal playback.\nThe optional quick toggle needs Beat FX Sidebar.",
       "order": 100,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "1.0",
       "versions": [
         {
@@ -178,7 +278,8 @@
           "path": "gated-cues/versions/1.0/gated-cues.zip",
           "size": 5458,
           "sha256": "4ab6e3be7e451560055242b8755824c43b462318f406c8c608870121e9a6b73a",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -187,7 +288,7 @@
       "title": "Slip Mode",
       "description": "Replace each deck's Slip Reverse control with Slip.\nPlayback continues in the background during scratching;\nrelease to resume at the continuing playback position.\nFlashing deck LEDs indicate that Slip is active.",
       "order": 110,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -196,7 +297,8 @@
           "path": "slip-mode/versions/2.0/slip-mode.zip",
           "size": 4878,
           "sha256": "985252ac924024dfc3c9de4aba90c9ef5ea706beb23225058fe97567307b42b7",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -205,7 +307,7 @@
       "title": "Playlist Editing",
       "description": "Edit track order from the main-screen playlist browser.\nHold the main browse knob on a playlist track to open\nthe editing controls. Changes apply to the USB library;\nkeep a backup of your export before editing.",
       "order": 120,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -214,7 +316,8 @@
           "path": "playlist-editor/versions/2.0/playlist-editor.zip",
           "size": 13213,
           "sha256": "f511309b9dff2471365c3a739d54c17907543a0ed2e0649668cb58589cbef31a",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
         }
       ]
     },
@@ -223,7 +326,7 @@
       "title": "Party Mode",
       "description": "Animate the jog-wheel ring LEDs with colour effects.\nChoose an effect and transition speed below.\nDisabling restores normal deck colours.\nFlashing effects may affect photosensitive users.",
       "order": 130,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -232,7 +335,84 @@
           "path": "party/versions/2.0/party.zip",
           "size": 3788,
           "sha256": "2a2e0362ebb1d9a72460910fa3e7804e156d50640786dfe252d774f50bf0ea65",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
+        }
+      ]
+    },
+    {
+      "folder": "ring-brightness",
+      "title": "Jog Ring Brightness",
+      "description": "Dim both jog rings to 75, 50, 25 or 10 percent of their normal\nbrightness. Works with deck colours, Party Mode and other mods.\nNeeds firmware R121 or later.",
+      "order": 135,
+      "min_firmware": "R121",
+      "latest": "1.0",
+      "versions": [
+        {
+          "version": "1.0",
+          "date": "2026-11-16",
+          "path": "ring-brightness/versions/1.0/ring-brightness.zip",
+          "size": 2952,
+          "sha256": "2e11d017064466fcfe0c9fd37e8e89ef3bb07ed308e588c96f05ce309ae3f021",
+          "changelog": "- Dim both jog rings to 75, 50, 25 or 10 percent.",
+          "min_firmware": "R121"
+        }
+      ]
+    },
+    {
+      "folder": "fader-start",
+      "title": "Fader Start",
+      "description": "Channel faders and the crossfader start and pause the decks.\nOpening a fader from the bottom plays its deck, closing it\npauses. Choose the crossfader sides below. Needs R122.",
+      "order": 137,
+      "min_firmware": "R122",
+      "latest": "1.1",
+      "versions": [
+        {
+          "version": "1.1",
+          "date": "2026-11-16",
+          "path": "fader-start/versions/1.1/fader-start.zip",
+          "size": 4049,
+          "sha256": "948e12b65b2127bcfe0ef0068f4f73d1182118594d56d5062ef32e64f18f5dfd",
+          "changelog": "- Channel faders and the crossfader start and pause the decks.",
+          "min_firmware": "R122"
+        }
+      ]
+    },
+    {
+      "folder": "usb-deck-colors",
+      "title": "USB Deck Colors",
+      "description": "Jog rings, deck buttons and the deck color show the color of\nthe USB each deck's track was loaded from, local USB or LINK USB.\nTYTO's Deck Highlight follows it too. Needs firmware R123 or later.",
+      "order": 138,
+      "min_firmware": "R123",
+      "latest": "1.3",
+      "versions": [
+        {
+          "version": "1.3",
+          "date": "2026-11-16",
+          "path": "usb-deck-colors/versions/1.3/usb-deck-colors.zip",
+          "size": 10203,
+          "sha256": "0d9eb5425757f310c1df8257e52deb52ee4fe03468ffb8c4150d2650343dcde5",
+          "changelog": "- Jog rings, deck buttons, the deck numbers on screen and the LOAD buttons take the colour of the USB each deck's track came from (local or LINK USB).\n- Option: brighter selected deck button.",
+          "min_firmware": "R123"
+        }
+      ]
+    },
+    {
+      "folder": "shift-knobs",
+      "title": "SHIFT Search & Zoom",
+      "description": "Hold SHIFT + a TRACK SEARCH button to search through the track\non that side's deck. SHIFT + BROWSE or BEAT LOOP zooms the waveforms.",
+      "order": 139,
+      "min_firmware": "R124",
+      "latest": "1.3",
+      "versions": [
+        {
+          "version": "1.3",
+          "date": "2026-11-20",
+          "path": "shift-knobs/versions/1.3/shift-knobs.zip",
+          "size": 6877,
+          "sha256": "81a9e8d12b231a8b5e6209552e2296b893699dcbdd8d6d8874c27c3f5d0454ce",
+          "changelog": "- Hold SHIFT and a TRACK SEARCH button to search through the track, faster the longer you hold.\n- SHIFT + BROWSE or SHIFT + BEAT LOOP zooms the waveforms (choose in the options).",
+          "min_firmware": "R124"
         }
       ]
     },
@@ -241,7 +421,7 @@
       "title": "Hide Track Name",
       "description": "Hide track names on the main display and compatible\nTYTO side screens. Use the eye controls to reveal or\nhide names while keeping the other deck information.",
       "order": 140,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -250,7 +430,27 @@
           "path": "hide-titles/versions/2.0/hide-titles.zip",
           "size": 7664,
           "sha256": "6c479a198ce0fa6ca3c6ff97c97bf6699f43c8148863881674c9607e6e1b1534",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
+        }
+      ]
+    },
+    {
+      "folder": "keep-tracks",
+      "title": "Keep Tracks On Eject",
+      "description": "Ejecting a USB stick in SOURCE keeps every track that is\nloaded on a deck, playing or paused, as on the XDJ-AZ.\nThe tracks are already in memory.",
+      "order": 145,
+      "min_firmware": "R122",
+      "latest": "1.0",
+      "versions": [
+        {
+          "version": "1.0",
+          "date": "2026-11-16",
+          "path": "keep-tracks/versions/1.0/keep-tracks.zip",
+          "size": 3544,
+          "sha256": "ca4bc8ed8e4dab92f6e84d23e491e7e2886a3089c3411c89aca4196208acc8be",
+          "changelog": "- Ejecting a USB stick keeps the tracks loaded on the decks playable.",
+          "min_firmware": "R122"
         }
       ]
     },
@@ -259,7 +459,7 @@
       "title": "Continuous Zone Playback",
       "description": "Automatically start the next track on the deck assigned\nto ZONE playback. Choose the ZONE assignment using\nthe normal controls. Disable this mod to restore\nthe stock continuation behavior.",
       "order": 150,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -268,7 +468,27 @@
           "path": "zone-continuous/versions/2.0/zone-continuous.zip",
           "size": 4246,
           "sha256": "b227bc5356e6c13ec0f71fdee53d569dd40153bbe540db532ac107cc93d9d9fe",
-          "changelog": "- First version in the online mod catalog."
+          "changelog": "- First version in the online mod catalog.",
+          "min_firmware": "R120"
+        }
+      ]
+    },
+    {
+      "folder": "prodjlink",
+      "title": "Pro DJ Link (Experimental)",
+      "description": "EXPERIMENTAL: joins the DJ Link network on the LAN port as a free player (1-4).\nKeeps logs in MODS/prodjlink/logs: send that folder with any problem report.",
+      "order": 160,
+      "min_firmware": "R123",
+      "latest": "2.0",
+      "versions": [
+        {
+          "version": "2.0",
+          "date": "2026-11-20",
+          "path": "prodjlink/versions/2.0/prodjlink.zip",
+          "size": 145630,
+          "sha256": "4959e20a34704e2211591852a8668f0b52fa7292f20bd1a75bfda5ba8f46c047",
+          "changelog": "- Experimental. Joins the DJ Link network on the LAN port as a free player (1-4).\n- Set channel 3 or 4 to PRO DJ LINK to play a linked player's track on that deck, with its waveform, cues, loops and tempo.\n- Browse other players' USB sticks as LINK USBs.\n- Logs are kept in MODS/prodjlink/logs: send that folder with any problem report.",
+          "min_firmware": "R123"
         }
       ]
     },
@@ -277,7 +497,7 @@
       "title": "Side Screen Waveforms (Legacy)",
       "description": "The original side-screen view: the deck's waveform, cues, loops,\nBPM, key and time on each side screen.\nRequires Side Screen Browser. TYTO's Side Screen View is the newer view.",
       "order": 160,
-      "min_firmware": "R117",
+      "min_firmware": "R120",
       "latest": "2.0",
       "versions": [
         {
@@ -286,7 +506,27 @@
           "path": "side-now-playing-legacy/versions/2.0/side-now-playing-legacy.zip",
           "size": 5807,
           "sha256": "876a3ce78a649862a551abb8de3f111778c6fbfc2c777fa99f8efda19909e0eb",
-          "changelog": "- The original side-screen waveform view, available as its own mod."
+          "changelog": "- The original side-screen waveform view, available as its own mod.",
+          "min_firmware": "R120"
+        }
+      ]
+    },
+    {
+      "folder": "mobius",
+      "title": "Mobius FX (Experimental)",
+      "description": "EXPERIMENTAL: MOBIUS in the Beat FX list. Select it and press\nBEAT FX ON for a rising or falling Mobius tone.",
+      "order": 175,
+      "min_firmware": "R124",
+      "latest": "1.0",
+      "versions": [
+        {
+          "version": "1.0",
+          "date": "2026-11-20",
+          "path": "mobius/versions/1.0/mobius.zip",
+          "size": 24525,
+          "sha256": "c008356d1acb32a20a769345f103fab8ce1069254853027a137512785d0a6321",
+          "changelog": "- Experimental. MOBIUS in the Beat FX list: select it and press BEAT FX ON for a rising or falling Mobius tone.\n- Choose the sound, direction, channel, beats per octave and level.",
+          "min_firmware": "R124"
         }
       ]
     }

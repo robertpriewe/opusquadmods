@@ -1,12 +1,42 @@
 {
   "format": 1,
-  "updated": "2026-11-09",
-  "latest": "R120",
+  "updated": "2026-11-20",
+  "latest": "R130",
   "app": {
-    "version": "1.2.0",
-    "url": "https://github.com/robertpriewe/opusquadmods/releases/tag/app-1.2.0"
+    "version": "1.3.0",
+    "url": "https://github.com/robertpriewe/opusquadmods/releases/tag/app-1.3.0"
   },
   "firmware": [
+    {
+      "release": "R130",
+      "label": "1.32X R130",
+      "date": "2026-11-20",
+      "internal_app_revision": 7771,
+      "note": "",
+      "output_filename": "OPUSQUADv132.UPD",
+      "source": {
+        "size": 176345103,
+        "payload_size": 176345088,
+        "sha256": "6ed20dc3b37211b8762c1759a0942af24c9941cdfe1f7a8fd26bfa3d7432f30a",
+        "crc32": 550163428
+      },
+      "target": {
+        "size": 176345103,
+        "payload_size": 176345088,
+        "sha256": "6076177d2c7e774a13b072ad99a597ad346a04b0d5b502b4308719f372f61da2",
+        "crc32": 2503716662
+      },
+      "footer": "XDJ-RR1.32",
+      "delta": {
+        "file": "R130-upd-delta.zstd",
+        "sha256": "9070b3a0ea94c2389dd62d0ad031b323e86b182f966330e54b5c68f5aa5f79de",
+        "size": 170906833,
+        "zstd_long": 31,
+        "url": "https://github.com/robertpriewe/opusquadmods/releases/download/firmware-R130/R130-upd-delta.zstd"
+      },
+      "release_page": "https://github.com/robertpriewe/opusquadmods/releases/tag/firmware-R130",
+      "changelog": "## Highlights\n\n- **New mods.** R130 is the firmware for a new set of mods in the **Mods** tab: **USB Deck Colors**, **SHIFT Search & Zoom**, **Fader Start**, **Keep Tracks On Eject**, **Jog Ring Brightness**, **TYTO's Deck Highlight**, **Pro DJ Link (Experimental)** and **Mobius FX (Experimental)**, plus new versions of **Stems**, **Light Mode**, **Side Screen Browser**, **FX Frequency**, **Quick USB**, **4-Deck Waveforms** and **TYTO's Side Screen View**.\n- **Faster ROBS MOD MENU.** Hold **SOURCE** for about a second and let go to open ROBS MOD MENU. The menu reopens on the item you used last (until the OPUS is switched off).\n- **Mods work together on the same screen.** Several mods can now change the same part of the screen at once, so Light Mode, TYTO's Deck Highlight and TYTO's side screens can all be on together.\n- **Minimum firmware per mod.** Every mod says which firmware it needs. A mod that needs a newer firmware is shown greyed out in ROBS MOD MENU with \"needs firmware Rxxx\" instead of loading, and the OQ Mods Patcher warns before installing it.\n\n## New for mods\n\n- **Mixer controls:** mods can read the channel faders, crossfader and knobs (used by Fader Start and Stems).\n- **Deck buttons and LEDs:** mods can react to deck buttons and read or change the deck LEDs (used by USB Deck Colors, FX Frequency and SHIFT Search & Zoom).\n- **Jog ring brightness:** mods can dim the jog rings (used by Jog Ring Brightness).\n- **Mods keep running without the settings USB:** mods that need it keep working after the USB stick with the mods is ejected (used by Keep Tracks On Eject).\n- **Same stick, same mods:** when the same USB stick comes back, its mods carry on where they were.\n- **Pause a deck:** mods can pause a deck the way its PLAY/PAUSE button does (used by Fader Start).\n- **Panels above pop-ups:** a mod's on-screen panel can stay visible over the deck input pop-up menu."
+    },
     {
       "release": "R120",
       "label": "1.32X R120",

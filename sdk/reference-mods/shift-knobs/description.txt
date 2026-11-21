@@ -1,0 +1,2 @@
+Hold SHIFT + a TRACK SEARCH button to search through the track
+on that side's deck. SHIFT + BROWSE or BEAT LOOP zooms the waveforms.

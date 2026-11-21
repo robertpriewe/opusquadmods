@@ -62,7 +62,7 @@ static void oq_feature_enabled(int on){
     oq_feature_api->log(on?"native service enabled":"native service disabled");
 }
 static int oq_feature_init(const struct oqmod_api *a,struct oqmod_info *info){
-    if(!a||a->version!=OQMOD_API_VERSION||a->size<sizeof *a||!a->native_bind||!a->native_get||!a->native_set||
+    if(!a||a->version!=OQMOD_API_VERSION||a->size<offsetof(struct oqmod_api,ring_brightness)||!a->native_bind||!a->native_get||!a->native_set||
        !a->menu_order||!a->default_enabled||!a->choice_buttons||!a->setting_get||!a->setting_set||!a->log||
        oq_feature_count()>4||!a->native_bind(oq_feature.service)||a->native_get("protocol",0)<2)return 1;
     oq_feature_api=a;a->menu_order(oq_feature.priority);

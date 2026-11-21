@@ -39,6 +39,9 @@ static int g_mixer_box[4], g_fxsel_box[4];
 static const char *const mixer_hide[] = {"N3gui5mixer13MicAreaWidgetE", "N3gui5mixer13ChannelWidgetE"};
 static char *g_mixer_hidden;   /* mixer we changed for 4-deck, or NULL; message thread */
 static char *g_mixer_parts[8]; /* the parts we hid */
+/* 2.3: the four ChannelWidgets (input box + its input / crossfader menus) and EP136's bounds */
+#define CHW_CLASS "N3gui5mixer13ChannelWidgetE"
+static char *g_chw[4];static int g_chw_box[4][4];static unsigned g_chw_n,g_chw_moved;
 static int is_mixer_hide(const char *c) {
     const char *k = rtti_name(c);
     for (size_t j = 0; k && j < sizeof mixer_hide / sizeof *mixer_hide; j++)
@@ -46,11 +49,20 @@ static int is_mixer_hide(const char *c) {
             return 1;
     return 0;
 }
+static void chw_back(void) {   /* EP136's own bounds for the channel boxes */
+    for (unsigned i = 0; i < g_chw_n; i++) {
+        const int *b = g_chw_box[i];
+        if (g_chw[i] && is_class(g_chw[i], CHW_CLASS)) { comp_bounds(g_chw[i], b[0], b[1], b[2], b[3]); comp_visible(g_chw[i], 1); }
+    }
+    g_chw_moved = 0;
+}
 static void mixer_restore(void) {
     fx_sidebar_restore();
     fx_overlay_restore();
     char *m = g_mixer_hidden;
     g_mixer_hidden = NULL;
+    if (g_chw_moved && is_class(m, "N3gui5mixer15MixerAreaWidgetE")) chw_back();
+    g_chw_n = 0;
     for (int i = 0; i < 8; i++) {
         char *c = g_mixer_parts[i];
         g_mixer_parts[i] = NULL;
@@ -66,6 +78,43 @@ static void mixer_restore(void) {
         olog("layout: mixer strip back\n");
     }
 }
+/* 2.3: an input or crossfader menu of one of the channel boxes is open */
+static int chw_menu_open(void) {
+    for (unsigned i = 0; i < g_chw_n; i++) {
+        char *c = g_chw[i];
+        if (!c || !is_class(c, CHW_CLASS)) continue;
+        char **kids = *(char ***) (c + 0x40);int n = *(int *) (c + 0x50);
+        if (!ptr_ok(kids) || n < 0 || n > 64) continue;
+        for (int k = 0; k < n; k++) {
+            const char *name = rtti_name(kids[k]);
+            if (name && (!strcmp(name, "N3gui5mixer18ChannelPopupWidgetE") || !strcmp(name, "N3gui5mixer21CrossFaderPopupWidgetE")) && comp_visible_now(kids[k]))
+                return 1;
+        }
+    }
+    return 0;
+}
+/* 2.3: the band with the arrows (menus closed), or the whole stock strip (a menu open, so the
+ * menu can open upwards over the lanes as in the 2-deck view). Every frame. */
+static void mixer_arrows(char *m) {
+    char *fx = child_of_class(m, FXSEL_CLASS, 0);
+    if (!fx || !g_chw_n) return;
+    const int *mb = g_mixer_box, *fb = g_fxsel_box;
+    if (chw_menu_open()) {
+        comp_bounds(m, mb[0], mb[1], mb[2], mb[3]);
+        comp_bounds(fx, fb[0], fb[1], fb[2], fb[3]);
+        for (unsigned i = 0; i < g_chw_n; i++) { const int *b = g_chw_box[i]; comp_bounds(g_chw[i], b[0], b[1], b[2], b[3]); comp_visible(g_chw[i], 1); }
+    } else {
+        comp_bounds(m, mb[0] + fb[0], mb[1] + fb[1] - ARROW_H, fb[2], fb[3] + ARROW_H);
+        comp_bounds(fx, 0, ARROW_H, fb[2], fb[3]);
+        /* the box's input button is its bottom 150 px: put its top (the arrow) at the band's top.
+         * 2.4: the box ends with the arrow tab (ARROW_H), so the input name and THRU under it are
+         * clipped by the box itself (they showed below the FX row in 2.3). ChannelWidget's
+         * resized() is empty (vt slot 34 = ret), so its children keep their places. */
+        for (unsigned i = 0; i < g_chw_n; i++) { const int *b = g_chw_box[i];
+            comp_bounds(g_chw[i], b[0] - fb[0], -(b[3] - 150) - ARROW_SKIP, b[2], (b[3] - 150) + ARROW_SKIP + ARROW_H + ARROW_UNDER); comp_visible(g_chw[i], 1); }
+    }
+    g_chw_moved = 1;
+}
 static void mixer_converge(char *m, int first) {
     char *fx = child_of_class(m, FXSEL_CLASS, 0);
     if (!fx)
@@ -74,14 +123,25 @@ static void mixer_converge(char *m, int first) {
         memcpy(g_mixer_box, m + COMP_BOUNDS, sizeof g_mixer_box);
         memcpy(g_fxsel_box, fx + COMP_BOUNDS, sizeof g_fxsel_box);
     }
-    const int *fb = g_fxsel_box;
-    comp_bounds(m, g_mixer_box[0] + fb[0], g_mixer_box[1] + fb[1], fb[2], fb[3]);
-    comp_bounds(fx, 0, 0, fb[2], fb[3]);
     char **kids = *(char ***) (m + 0x40);
     int n = *(int *) (m + 0x50);
     if (!ptr_ok(kids) || n < 0 || n > 64)
         return;
+    if (first || !g_chw_n) {   /* EP136's channel boxes and their bounds, before we move them */
+        g_chw_n = 0;
+        for (int i = 0; i < n && g_chw_n < 4; i++)
+            if (is_class(kids[i], CHW_CLASS)) { g_chw[g_chw_n] = kids[i]; memcpy(g_chw_box[g_chw_n], kids[i] + COMP_BOUNDS, sizeof g_chw_box[0]); g_chw_n++; }
+    }
+    int arrows = arrows_active();
+    if (arrows) mixer_arrows(m);
+    else {
+        if (g_chw_moved) chw_back();
+        const int *fb = g_fxsel_box;
+        comp_bounds(m, g_mixer_box[0] + fb[0], g_mixer_box[1] + fb[1], fb[2], fb[3]);
+        comp_bounds(fx, 0, 0, fb[2], fb[3]);
+    }
     for (int i = 0; i < n; i++) {
+        if (arrows && is_class(kids[i], CHW_CLASS)) continue;   /* 2.3: shown in the arrow band */
         if (!is_mixer_hide(kids[i]) || !comp_visible_now(kids[i]))
             continue;
         for (int j = 0; j < 8; j++)

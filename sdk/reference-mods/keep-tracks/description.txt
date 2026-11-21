@@ -1,0 +1,3 @@
+Ejecting a USB stick in SOURCE keeps every track that is
+loaded on a deck, playing or paused, as on the XDJ-AZ.
+The tracks are already in memory.

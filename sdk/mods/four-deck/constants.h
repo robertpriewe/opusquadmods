@@ -40,8 +40,23 @@ static int lane_four_row(int deck) {
 /* R87/R88: with the STEMS strip open (and no overviews) the lanes close up to 157 px so the stems strip
  * fits between the last lane (ends y 698) and the FX channel select row (y 745). */
 #define LANE4_STEMS_PITCH 157
+/* 2.3: the mixer channels' input arrows in a band above the FX channel select row. 2.5: the
+ * band is only the arrow (16 px; the arrow is rows ~10..21 of the box's 36 px tab, so the box is
+ * lifted ARROW_SKIP px more); lanes 164 px (end y 726). Only in the full view (no overviews,
+ * STEMS closed). */
+#define LANE4_ARROW_PITCH 164
+#define ARROW_H 16
+#define ARROW_SKIP 8
+/* 2.6: the tab reaches ARROW_UNDER px under the FX row's top edge, filling the row's transparent
+ * top margin (a dark gap between tab and FX button in 2.5); the box's text starts lower. */
+#define ARROW_UNDER 8
+static int g_arrows=1;   /* option "arrows", copied by tick() */
+static int arrows_active(void) {
+    return __atomic_load_n(&g_arrows,__ATOMIC_RELAXED)&&!layout_cfg.overviews&&!(layout_cfg.stems&&layout_cfg.stems_open);
+}
 static int lane4_pitch(void) {
-    return layout_cfg.overviews?LANE4_COMPACT_PITCH:layout_cfg.stems&&layout_cfg.stems_open?LANE4_STEMS_PITCH:LANE4_FULL_PITCH;
+    return layout_cfg.overviews?LANE4_COMPACT_PITCH:layout_cfg.stems&&layout_cfg.stems_open?LANE4_STEMS_PITCH:
+        arrows_active()?LANE4_ARROW_PITCH:LANE4_FULL_PITCH;
 }
 static const int lane_stock_y[4] = {80, 262, 80, 262};
 

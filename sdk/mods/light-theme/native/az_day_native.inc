@@ -302,12 +302,41 @@ static uint32_t dm_map(uint32_t argb) {
     return o;
 }
 
-/* Gray-only mapping for waveform background cells, never accent colors. */
+/* OPUS 2.3: the loop band behind the waveform is a dark amber/olive cell (stock dark
+ * theme). Passed through unchanged it became a dark box on the light ground (hardware
+ * photo 2026-11-15). Dark (max channel <= 0xa0), saturated, amber-hued cells (hue 20..75)
+ * become a light tint of the same hue on the light ground. Band inks are bright (amber
+ * max 0xff) or blue, so they never match. Day (flip) theme only. */
+static int dm_wf_is_dark_amber(uint32_t argb) {
+    int r = (argb >> 16) & 0xff, g = (argb >> 8) & 0xff, b = argb & 0xff;
+    int mx = r > g ? (r > b ? r : b) : (g > b ? g : b), mn = r < g ? (r < b ? r : b) : (g < b ? g : b);
+    if (mx - mn <= 12 || mx > 0xa0 || mx < 0x18) return 0;
+    if (mx != r && mx != g) return 0;                        /* blue-led: not amber */
+    int h = mx == r ? 60 * (g - b) / (mx - mn) : 120 + 60 * (b - r) / (mx - mn);
+    if (h < 0) h += 360;
+    return h >= 20 && h <= 75;
+}
+static uint32_t dm_wf_light_tint(uint32_t argb) {
+    int c[3] = {(int) (argb >> 16) & 0xff, (int) (argb >> 8) & 0xff, (int) argb & 0xff};
+    int mx = c[0] > c[1] ? (c[0] > c[2] ? c[0] : c[2]) : (c[1] > c[2] ? c[1] : c[2]);
+    int base = dm_L(0);                                      /* the light waveform ground */
+    uint32_t out = argb & 0xff000000u;
+    for (int i = 0; i < 3; i++) {
+        int hue = c[i] * 255 / mx;                           /* full-strength hue, 0..255 */
+        int v = base - (255 - hue) * 45 / 100;               /* 45 % tint below the ground */
+        out |= (uint32_t) (v < 0 ? 0 : v > 255 ? 255 : v) << (16 - 8 * i);
+    }
+    return out;
+}
+/* Gray-only mapping for waveform background cells, never accent colors
+ * (except the dark amber loop band, see above). */
 static uint32_t dm_map_gray(uint32_t argb) {
     uint32_t r = (argb >> 16) & 0xff, g = (argb >> 8) & 0xff, b = argb & 0xff;
     uint32_t mx = r > g ? (r > b ? r : b) : (g > b ? g : b),
              mn = r < g ? (r < b ? r : b) : (g < b ? g : b);
-    return mx - mn > 12 ? argb : dm_map(argb);
+    if (mx - mn > 12)
+        return dm_flip_on() && dm_wf_is_dark_amber(argb) ? dm_wf_light_tint(argb) : argb;
+    return dm_map(argb);
 }
 
 /* OPUS R21 light-only waveform ink. The OPUS 3-band native raster supplies
@@ -319,6 +348,8 @@ static uint32_t dm_wf_ink(uint32_t argb) {
     int r=(argb>>16)&255, g=(argb>>8)&255, b=argb&255;
     int mx=r>g?(r>b?r:b):(g>b?g:b);
     int mn=r<g?(r<b?r:b):(g<b?g:b);
+    if(dm_flip_on() && dm_wf_is_dark_amber(argb))
+        return dm_wf_light_tint(argb);                       /* loop band (2.3) */
     if(mx-mn<=12) {
         if(mx>=160) {
             r=mx*214/255; g=mx*38/255; b=mx*175/255;
@@ -2214,6 +2245,66 @@ static int dm_draw_mixer_tile(void *g,void **img,const void *xf) {
     for(int row=0;row<h;row++)memcpy(pixels+(long)row*stride,cache[slot].original+row*rowbytes,rowbytes);
     busy=0;return 1;
 }
+/* OPUS 2.3: census of small opaque dark images drawn while the theme is on (the eject
+ * button's black box on the light deck card, hardware photo 2026-11-15): which path they
+ * take. Paint thread writes, the mod tick reads (display only). */
+struct oq_img_census {unsigned short w,h;unsigned char rec,kind,noart,flipped,fill,addkind;uint32_t px;};
+static struct oq_img_census oq_census[24];static unsigned oq_census_n;
+static int dm_ground_of(unsigned char *b);
+static void oq_census_note(unsigned char *b,const struct dm_art *e,int fill){
+    if(*(uintptr_t *)b!=DM_SPD_VTABLE||*(int *)(b+DM_SPD_PSTR)!=4)return;
+    int w=*(int *)(b+DM_IPD_W),h=*(int *)(b+DM_IPD_H),ls=*(int *)(b+DM_SPD_LSTR);
+    const unsigned char *d=*(const unsigned char **)(b+DM_SPD_DATA);
+    if(!d||w<8||h<8||w>260||h>260)return;
+    const unsigned char *p=d+(long)1*ls+1*4;           /* near the top-left corner */
+    if(p[3]<0xf0||p[1]>0x60)return;                     /* opaque and dark only */
+    unsigned n=oq_census_n<24?oq_census_n:24;
+    for(unsigned i=0;i<n;i++)if(oq_census[i].w==w&&oq_census[i].h==h&&oq_census[i].rec==(e!=NULL)){
+        if(e){oq_census[i].kind=(unsigned char)e->kind;oq_census[i].noart=(unsigned char)e->noart;oq_census[i].flipped=(unsigned char)e->flipped;}
+        return;}
+    if(oq_census_n>=24)return;
+    struct oq_img_census *c=&oq_census[oq_census_n];
+    c->w=(unsigned short)w;c->h=(unsigned short)h;c->rec=e!=NULL;c->fill=(unsigned char)!!fill;
+    c->kind=e?(unsigned char)e->kind:0;c->noart=e?(unsigned char)e->noart:0;c->flipped=e?(unsigned char)e->flipped:0;
+    c->addkind=e?0:(unsigned char)dm_ground_of(b);
+    c->px=(uint32_t)p[2]<<16|(uint32_t)p[1]<<8|p[0];
+    __atomic_store_n(&oq_census_n,oq_census_n+1,__ATOMIC_RELEASE);
+}
+int oq_census_text(char *out,unsigned cap){
+    unsigned n=__atomic_load_n(&oq_census_n,__ATOMIC_ACQUIRE),used=0;
+    for(unsigned i=0;i<n&&used+40<cap;i++){const struct oq_img_census *c=&oq_census[i];
+        int k=snprintf(out+used,cap-used," %ux%u%s k%u n%u f%u a%u %06x;",c->w,c->h,c->rec?"r":"u",c->kind,c->noart,c->flipped,c->addkind,(unsigned)c->px);
+        if(k<0)break;
+        used+=(unsigned)k;
+    }
+    if(used<cap)out[used]=0;
+    return (int)used;
+}
+/* OPUS 2.3: the "no artwork" vinyl placeholder (#191919 sleeve, #323232 disc) was left
+ * dark on purpose upstream; on the light deck cards it read as a black square. Day only:
+ * a light vinyl (sleeve near the ground, disc mid gray), original bytes kept for restore. */
+static unsigned oq_noart_themed;
+static void dm_flip_noart(struct dm_art *e, unsigned char *ipd) {
+    unsigned char *d = e->data;
+    int ls = *(int *) (ipd + DM_SPD_LSTR), rb = e->w * e->bpp;
+    if (!e->orig && !(e->orig = malloc((size_t) rb * e->h)))
+        return;
+    for (int y = 0; y < e->h; y++)
+        memcpy(e->orig + (size_t) y * rb, d + (long) y * ls, rb);
+    for (int y = 0; y < e->h; y++)
+        for (int x = 0; x < e->w; x++) {
+            unsigned char *p = d + (long) y * ls + x * 4;
+            int a = p[3];
+            if (!a || !dm_is_gray(p))
+                continue;
+            int L = p[1] * 255 / a;
+            int v = 0xee - L * 2;                           /* 0x19 -> 0xbc, 0x32 -> 0x8a */
+            v = v < 0x70 ? 0x70 : v > 0xff ? 0xff : v;
+            p[0] = p[1] = p[2] = (unsigned char) (v * a / 255);
+        }
+    e->flipped = 1;
+    oq_noart_themed++;
+}
 static void dm_drawimg_t_body(void *g, void **img, const void *xf, int fill);
 /* An image paints over whatever fill was under it (the deck strips draw a colored
  * fill, then opaque art on top), so it counts as a later "fill" for
@@ -2238,6 +2329,7 @@ static void dm_drawimg_t_body(void *g, void **img, const void *xf, int fill) {
         struct dm_art *e = dm_find_art_live(*img);
         int on = __atomic_load_n(&g_dm_on, __ATOMIC_RELAXED);
         int flip = on && dm_flip_on();
+        if(flip)oq_census_note((unsigned char *)*img,e,fill);
         if(!e&&flip&&!fill&&dm_draw_mixer_tile(g,img,xf))return;
 #ifdef OQ_THEME_TRACE
         if(on&&xf){float x=((const float *)xf)[2],y=((const float *)xf)[5];
@@ -2375,9 +2467,9 @@ static void dm_drawimg_t_body(void *g, void **img, const void *xf, int fill) {
                 *(int *) (bb + DM_IPD_H) == e->h)
                 dm_classify(e, bb);
         }
-        if (e && e->noart && !e->flipped)
-            e = NULL; /* stock bytes, drawn as they are */
-        if (e && (e->flipped ? (!want || e->th != th || e->noart) : want)) {
+        if (e && e->noart && !e->flipped && !(want && dm_flip_on()))
+            e = NULL; /* stock bytes, drawn as they are (dark themes) */
+        if (e && (e->flipped ? (!want || e->th != th || (e->noart && !dm_flip_on())) : want)) {
             unsigned char *b = (unsigned char *) *img;
             if (*(void **) (b + DM_SPD_DATA) != e->data || *(int *) (b + DM_IPD_W) != e->w ||
                 *(int *) (b + DM_IPD_H) != e->h) {
@@ -2385,7 +2477,11 @@ static void dm_drawimg_t_body(void *g, void **img, const void *xf, int fill) {
                                  __ATOMIC_RELEASE); /* reused memory: tombstone, never touch */
             } else {
                 dm_restore(e, b);
-                if (want && !e->noart) {
+                if (want && e->noart && dm_flip_on() && e->bpp == 4) {
+                    dm_flip_noart(e, b);
+                    if (e->flipped)
+                        e->th = th;
+                } else if (want && !e->noart) {
                     if (e->kind == DM_K_UNKNOWN)
                         dm_classify(e, b);
                     if (!dm_flip_on() || dm_art_daykind(e) == DM_K_GRAY || e->perpixel) {

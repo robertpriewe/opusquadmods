@@ -6,7 +6,7 @@
 
 Robs Opus Quad Mods is a custom-firmware project for the OPUS-QUAD, based on official firmware **1.32**.
 
-The current public build is **R120 (1.32X)**. It adds a native four-deck waveform layout, CDJ-3000 style side screens, a side-screen browser, stems, and a collection of optional interface, browsing, FX, cue and jog-ring features. The firmware is installed with the **OQ Mods Patcher**, which builds the update from your own official 1.32 file; Pioneer firmware files are not included.
+The current public build is **R130 (1.32X)**. It adds a native four-deck waveform layout, CDJ-3000 style side screens, a side-screen browser, stems, and a collection of optional interface, browsing, FX, cue and jog-ring features. The firmware is installed with the **OQ Mods Patcher**, which builds the update from your own official 1.32 file; Pioneer firmware files are not included.
 
 ### Mods and the installer
 
@@ -93,12 +93,13 @@ Install them with the OQ Mods Patcher, then switch them on and configure them in
 
 - **4-Deck Waveforms** — four full-height native waveform lanes, in mixer order (3 / 1 / 2 / 4) or deck order (1 / 2 / 3 / 4), with smoothing modes (Native Height 30 is the default and recommended) and optional track overviews. The stock 2 DECK and 2/4 DECK layouts remain available.
 - **TYTO's Side Screen View** — CDJ-3000 style side screens with the selected and master deck waveforms, cover art and track information.
+- **TYTO's Deck Highlight** — an outline in the deck colour around the main-screen waveform rows of the selected decks, with adjustable size and transparency. Can dim the big waveforms of the decks that aren't selected.
 - **Side Screen Browser** — a deck-specific browser on the side displays. Browse USBs, playlists and tracks (with artist, BPM and key) and confirm to load. Beat-loop wheels by default, with deck-button and track-search-button schemes available. Stock Load Lock is required.
-- **Stems** — real-time VOCAL / INST / BASS / DRUMS mutes per deck from pre-made stem files. Based on the AZ-MODS stems engine.
-- **Light Mode** — light interface palettes, including a blue-waveform option. Also changes TYTO's side-screen waveforms.
-- **Quick USB** — named, color-coded on-screen USB shortcuts that open the selected source in its native browser; the active one is highlighted.
+- **Stems** — real-time VOCAL / INST / BASS / DRUMS mutes per deck from pre-made stem files. The channel 3/4 TRIM, HI, MID and LOW knobs set the stem volumes of decks 1/2, and tracks with stems get a STEMS icon in the browser. Based on the AZ-MODS stems engine.
+- **Light Mode** — light interface palettes, including a blue-waveform option, with light loop areas. Also changes TYTO's side-screen waveforms.
+- **Quick USB** — named, color-coded on-screen USB shortcuts that open the selected source in its native browser; the active one is highlighted. Can also show the LINK USBs of other Pro DJ Link players.
 - **Beat FX Sidebar** — the Beat FX panel at the right of the main waveform screen in every layout. It steps aside for the INPUT, crossfader, MIC, FX list and track-info pop-ups.
-- **FX Frequency** — LOW | ALL | HIGH for Beat FX, kept across effect changes. Needs Beat FX Sidebar.
+- **FX Frequency** — LOW | ALL | HIGH for Beat FX: LOW and HIGH play the effect like holding the bottom or top of the X-PAD, and BEAT < / > still change the beat. Needs Beat FX Sidebar.
 - **FX Knob Selector** — turn the Beat FX TIME knob to step through MIC, Deck 3, Deck 1, Deck 2, Deck 4 and MASTER, with one to five detents per target (three by default). Hold SHIFT while turning TIME for normal effect-time adjustment.
 - **Gate Cues** — on a paused deck, hold a hot cue to audition it; release returns to the cue point unless PLAY was pressed while holding. Quick toggle in the FX sidebar.
 - **Slip Mode** — the Slip Reverse control toggles Slip per deck, with LED feedback.
@@ -107,9 +108,17 @@ Install them with the OQ Mods Patcher, then switch them on and configure them in
 - **Hide Track Name** — an eye on each track box hides that deck's title and artist on the main screen and on the side screens, including TYTO's. Tap it again to show them.
 - **Continuous Zone Playback** — the zone deck (channel 3 or 4) plays on through its playlist.
 - **Side Screen Waveforms (Legacy)** — the original FLX10-style side-screen view: waveform, cues, loops, BPM, key and time. Needs Side Screen Browser.
+- **USB Deck Colors** — jog rings, deck buttons, the deck numbers on screen and the LOAD buttons take the colour of the USB each deck's track came from (local or LINK USB), with an optional brighter selected deck button.
+- **SHIFT Search & Zoom** — hold SHIFT and a TRACK SEARCH button to search through the track, faster the longer you hold; SHIFT + BROWSE or SHIFT + BEAT LOOP zooms the waveforms.
+- **Fader Start** — channel faders and the crossfader start and pause the decks.
+- **Keep Tracks On Eject** — ejecting a USB stick keeps the tracks loaded on the decks playable, as on the XDJ-AZ.
+- **Jog Ring Brightness** — dim both jog rings to 75, 50, 25 or 10 percent.
+- **Pro DJ Link (Experimental)** — joins the DJ Link network on the LAN port as a free player. Set channel 3 or 4 to PRO DJ LINK to play a linked player's track on that deck with its waveform, cues, loops and tempo, and browse other players' USB sticks as LINK USBs.
+- **Mobius FX (Experimental)** — MOBIUS in the Beat FX list: a rising or falling Mobius tone, with a choice of sound, direction, channel, beats per octave and level.
+- **ROBS MOD MENU** — hold SOURCE for about a second and let go to open it; it reopens on the item you used last.
 - **Persistent settings** — mod switches are stored in `MODS/state.txt` and each mod's options in `MODS/<mod>/settings.txt` on the USB; general settings in `OPUSMOD_SETTINGS.cfg`. The patcher keeps existing settings and creates defaults only where they are missing.
 
-Mod developers can build their own mods with the [OQ Mods SDK](sdk/): headers, API reference, build tools, examples and the source of the mods listed above (except TYTO's Side Screen View).
+Mod developers can build their own mods with the [OQ Mods SDK](sdk/): headers, API reference, build tools, examples and the source of the mods listed above (except TYTO's mods and the two Experimental mods).
 
 ## Getting started
 
@@ -121,7 +130,7 @@ The OQ Mods Patcher verifies the official 1.32 update locally and writes the mod
 2. Download the **OQ Mods Patcher** for macOS (Apple Silicon or Intel) or Windows from the project's **Releases** page.
 3. Plug in your USB stick and open the patcher. On the **Firmware** tab, choose the official `OPUSQUADv132.UPD` (the patcher remembers it), pick the firmware version (the latest is selected), and click **Download and write to USB**. The patch is downloaded, checked and applied on your computer, and the result is verified before it is written as `OPUSQUADv132.UPD` to the root of the stick. Keep the stock 1.32 update on a separate, clearly labeled recovery USB.
 4. With the unit powered off, hold **BEAT SYNC** and **MASTER** on the right deck while powering it on to enter the update screen. Follow the on-screen instructions. Do not power off or remove the USB during the update. When the side-screen controllers are updated too, the update takes about a minute longer than a stock update.
-5. After reboot, **Settings > General > Version No.** shows **1.32X R120**, and the start-up screen shows **ROBS MOD 1.32X R120** in the bottom-right corner.
+5. After reboot, **Settings > General > Version No.** shows **1.32X R130**, and the start-up screen shows **ROBS MOD 1.32X R130** in the bottom-right corner.
 
 ### Installing and updating mods
 
@@ -137,14 +146,13 @@ Mods can also be installed by hand: unzip `mods/<mod>/versions/<version>/<mod>.z
 
 - One-touch beat-grid ×2 / ÷2
 - Cover art in the side-screen browser
-- Jog ring brightness
 - Live Bluetooth deck with a recorded waveform (OMNIS-DUO style)
-- Full PRO DJ LINK support
+- Full PRO DJ LINK support (the Pro DJ Link mod is Experimental)
 - Smaller system-wide font options
 
 ## Credits
 
-- **TYTO** — creator of TYTO's Side Screen View.
+- **TYTO** — creator of TYTO's Side Screen View and TYTO's Deck Highlight.
 - **Kyle Hosman** — creator of the XDJ-AZ Mods project, whose public work provided valuable reference and inspiration. The stems engine is a port of the AZ-MODS stems engine (GPL-3.0); its source is published with each release that includes it.
 - **LycheeAPPF, Tratosca and Sam Leone** — guidance and knowledge shared during development.
 - The OPUS-QUAD community and everyone who tested builds and reported results.

@@ -1,0 +1,6 @@
+{
+  "folder": "deck-highlight",
+  "title": "TYTO's Deck Highlight",
+  "description": "Highlights active Decks around the decks.\nColor is based on the Deck color.\nCan dim non active decks.",
+  "order": 23
+}

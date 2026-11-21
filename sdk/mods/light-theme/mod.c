@@ -27,7 +27,8 @@ static void light_enabled(int on){
 static void light_tick(void){
     oq_feature_tick();
     static int reported=-1;
-    if(reported!=ready){reported=ready;oq_feature_api->set_status(ready?"USB native theme engine ready.":"Native paint hooks unavailable; stock colours preserved.");}
+    /* 2.4: no status while the theme works; only a short note when the hooks are unavailable */
+    if(reported!=ready){reported=ready;oq_feature_api->set_status(ready?"":"Native paint hooks unavailable; stock colours preserved.");}
 }
 int oqmod_init(const struct oqmod_api *a,struct oqmod_info *info){
     if(!a||a->size<sizeof *a||!a->theme_provider||!a->native_engine||!a->native_get||!a->ep136_ok||!a->patch||!a->hook||!a->set_status)return 1;
@@ -37,5 +38,5 @@ int oqmod_init(const struct oqmod_api *a,struct oqmod_info *info){
         opus_light_palette_set,opus_light_palette,opus_light_surface,opus_light_ink};
     if(!a->theme_provider(&provider))return 1;
     if(a->ep136_ok())(void)opus_light_install(lt_patch,lt_hook);
-    info->enabled=light_enabled;info->tick=light_tick;info->version="2.2";return 0;
+    info->enabled=light_enabled;info->tick=light_tick;info->version="2.4";return 0;
 }

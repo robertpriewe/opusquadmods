@@ -1,0 +1,6 @@
+{
+  "folder": "fader-start",
+  "title": "Fader Start",
+  "description": "Channel faders and the crossfader start and pause the decks.\nOpening a fader from the bottom plays its deck, closing it\npauses. Choose the crossfader sides below. Needs R122.",
+  "order": 137
+}

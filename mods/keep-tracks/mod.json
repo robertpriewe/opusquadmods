@@ -1,0 +1,6 @@
+{
+  "folder": "keep-tracks",
+  "title": "Keep Tracks On Eject",
+  "description": "Ejecting a USB stick in SOURCE keeps every track that is\nloaded on a deck, playing or paused, as on the XDJ-AZ.\nThe tracks are already in memory.",
+  "order": 145
+}

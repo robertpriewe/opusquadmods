@@ -1,0 +1,6 @@
+{
+  "folder": "prodjlink",
+  "title": "Pro DJ Link (Experimental)",
+  "description": "EXPERIMENTAL: joins the DJ Link network on the LAN port as a free player (1-4).\nKeeps logs in MODS/prodjlink/logs: send that folder with any problem report.",
+  "order": 160
+}

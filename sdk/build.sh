@@ -17,6 +17,13 @@ docker run --rm -v "$SDK/include:/sdk:ro" -v "$(cd "$SRC" && pwd):/work" oqmod-s
     echo 'uses a C library function newer than the deck has (glibc 2.29)'; exit 1; fi
   aarch64-linux-gnu-strip --strip-unneeded build/$NAME/mod.so"
 echo "built $SRC/build/$NAME/mod.so -> copy $SRC/build/$NAME to MODS/$NAME on the settings USB"
-for asset in icon.pgm menu.order README.md LICENSE NOTICE diagnostics.only menu.title version.txt description.txt choices.order; do
+for asset in icon.pgm menu.order README.md LICENSE NOTICE diagnostics.only keep.running menu.title version.txt description.txt choices.order; do
   if test -f "$SRC/$asset"; then cp "$SRC/$asset" "$SRC/build/$NAME/$asset"; fi
 done
+# Minimum firmware: the newer of the folder's min-firmware.txt (default R120) and what the
+# built mod.so checks the API for (tools/min_firmware.py). The player refuses to load a mod
+# that needs newer firmware (R124+); the OQ Mods Patcher warns before installing it.
+declared="$(tr -d ' \r\n' < "$SRC/min-firmware.txt" 2>/dev/null || true)"
+test -n "$declared" || declared=R120
+python3 "$SDK/tools/min_firmware.py" "$SRC/build/$NAME/mod.so" --declared "$declared" > "$SRC/build/$NAME/min-firmware.txt"
+echo "minimum firmware: $(cat "$SRC/build/$NAME/min-firmware.txt")"

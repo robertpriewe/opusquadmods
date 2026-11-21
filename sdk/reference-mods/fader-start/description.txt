@@ -1,0 +1,3 @@
+Channel faders and the crossfader start and pause the decks.
+Opening a fader from the bottom plays its deck, closing it
+pauses. Choose the crossfader sides below. Needs R122.

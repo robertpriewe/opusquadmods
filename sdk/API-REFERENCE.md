@@ -109,6 +109,11 @@ any callback.
 | `diagnostic_status(out, cap)` | System info and the last save result | |
 | `menu_action_label(i, label)` | Renames action `i` | From `tick()` or callbacks |
 | `ring_brightness(percent)` | Dims both jog rings to 1..100 % of what they show (deck colour, Party Mode, mods' LEDs); never brightens. One enabled mod owns it; switching that mod off restores 100 %. R121+: check `api->size` first | From `tick()` or `enabled()` |
+| `mixer(&m)` | Fills `struct oqmod_mixer`: channel faders, crossfader, each channel's TRIM/HI/MID/LOW/COLOR, MASTER/BOOTH/ZONE levels, MIC EQs, headphones, CUE/ZONE/Beat FX buttons, all 10-bit (0..1023, knobs 512 at centre), plus the raw frame. Set `m.size` first; returns 1 when valid. R122+ | Any thread |
+| `deck_pause(deck)` | Pauses deck 1..4 like its PLAY/PAUSE button (counterpart of `deck_play`). R122+ | From `tick()`, enabled mods only |
+| `deck_buttons(handler)` | R123. Every deck-controller button edge: `handler(side, id, down)` on the input thread; return 1 to keep it from the deck software. |
+| `deck_select_lock(mask)` | R123. Bits 0-3 = decks 1-4: the deck-select buttons can't switch a side to a locked deck while the mod is on. |
+| `led_state(side, led, &value)` | R123. The deck software's own LED value (before mods' `led_set`), e.g. `OQMOD_LED_MASTER`. |
 
 ## The mod folder
 
@@ -125,8 +130,18 @@ any callback.
 | `choices.order` | Display order of choice buttons, e.g. `mode=3,0,1,2` (R117) | Must be a full permutation |
 | `icon.pgm` | 48x48 binary PGM (P5, maxval 255) | Falls back to the puzzle icon |
 | `diagnostics.only` | Load only when `enable_diagnostics.txt` is on a USB at startup | |
+| `min-firmware.txt` | Oldest firmware the mod works with, e.g. `R123`. R124+ do not load a mod that needs newer firmware and show "needs firmware R123" instead (R124) | One line, `R` + number |
 
 `MODS/state.txt` holds only the switches (`on.<folder>=0|1`). Up to 32 mods are loaded.
+
+### Minimum firmware
+
+Every mod declares the oldest firmware it works with in `min-firmware.txt`:
+- `build.sh` writes it into the build folder. It takes the newer of the source folder's own `min-firmware.txt` (default R120) and what the built `mod.so` checks `api->size` for (`tools/min_firmware.py`).
+- API sizes: up to R120 0x238, R121 0x240, R122 0x250, R123/R124 0x268.
+- A check `a->size < sizeof *a` makes a mod need the firmware of the SDK it was built with. Check `offsetof` the newest call you actually use instead.
+- The OQ Mods Patcher shows each version's minimum. It warns before installing a mod the player's firmware is too old for. `catalog/publish_mod.py` records the minimum per version.
+- Firmware before R124 ignores the file. To explain there instead of failing with "init failed", start `oqmod_init()` with `if (!OQMOD_HAS_R123(a)) return oqmod_needs_firmware(a, info, "Name", "1.0", "R123");` (`oqmod_firmware.h`).
 Use plain ASCII in titles and descriptions: curly quotes show as garbage.
 
 ## Symbols the firmware exports
@@ -151,9 +166,13 @@ them.
 - `oqmod_master_audio.h`: the **read-only master feed** (R118): a copy of the final stereo
   mix for meters, analysis or recording. It cannot change the sound; a writable master
   insert does not exist on OPUS. See [MASTER-AUDIO.md](MASTER-AUDIO.md).
+- `oqmod_deck_audio.h` (SDK 1.11, R120+): the **deck audio insert**: the four decks' audio
+  as float arrays you change in place before it reaches the mixer (`oq_deck_audio_install`,
+  `oq_deck_audio_enable`, `oq_deck_audio_status`). Not the master: channel EQ/faders, Beat FX
+  and LINE/PHONO/MIC come after it. See [DECK-AUDIO.md](DECK-AUDIO.md).
 
 ## Examples
 
-- `examples/`: small third-party style mods (BPM difference, party mode, set list, master meter).
+- `examples/`: small third-party style mods (BPM difference, party mode, set list, master meter, deck tone).
 - `mods/`: the built-in feature engines, which show the owner-only calls in use.
 - `reference-mods/`: Bluetooth Waveform, Gated Cues, Party, Pro DJ Link.

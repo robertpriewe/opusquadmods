@@ -1,4 +1,3 @@
 Control prepared stems independently for each deck.
-Use compatible pre-generated stem files on the USB.
-Enable the mod, load a prepared track and use the
-on-screen stem controls to mute or restore parts.
+Channel 3/4 knobs set deck 1/2 stem volume, in button order:
+TRIM vocals, HI instruments, MID bass, LOW drums.

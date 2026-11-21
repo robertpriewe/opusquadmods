@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     'addon-engine-extraction-r122/oqmod-sdk/tests/fx_engine_test.sanitized'
+relocations:     []
+...

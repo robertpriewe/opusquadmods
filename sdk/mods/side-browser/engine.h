@@ -94,6 +94,36 @@ static void br_text(unsigned char *out,unsigned capacity,const char *in) {
  * R86: a new generation only when the rows change. The page is republished on every
  * cursor step and refresh; a new generation makes the controller drop its rows and draw
  * the plain page until they arrive again, which showed as the two views flickering. */
+/* STEMS marker: a track has stems when STEMS/<folder> exists on its stick, the folder named
+ * after the audio file, which rekordbox names "TITLE - ARTIST". The folder list is read
+ * once per stick and again every 10 s, off the render path (settings tick). */
+#include <dirent.h>
+#include <stdlib.h>
+#include <strings.h>
+#define BR_STEMS_MAX 1024
+static char br_stems_mount[96];static uint64_t br_stems_read_ms;
+static char (*br_stems_names)[256];static unsigned br_stems_count;
+static void br_stems_refresh(const char *mount,uint64_t now){
+    if(!strcmp(mount,br_stems_mount)&&now-br_stems_read_ms<10000)return;
+    snprintf(br_stems_mount,sizeof br_stems_mount,"%s",mount);br_stems_read_ms=now;br_stems_count=0;
+    if(!br_stems_names&&!(br_stems_names=calloc(BR_STEMS_MAX,sizeof *br_stems_names)))return;
+    char dir[160];snprintf(dir,sizeof dir,"%s/STEMS",mount);
+    DIR *d=opendir(dir);if(!d)return;
+    struct dirent *e;
+    while((e=readdir(d))&&br_stems_count<BR_STEMS_MAX)
+        if(e->d_name[0]!='.')snprintf(br_stems_names[br_stems_count++],256,"%s",e->d_name);
+    closedir(d);
+}
+static int br_has_stems(const char *title,const char *artist){
+    if(!title[0])return 0;
+    char both[200];snprintf(both,sizeof both,"%s - %s",title,artist);
+    size_t tl=strlen(title);
+    for(unsigned i=0;i<br_stems_count;i++){
+        const char *n=br_stems_names[i];
+        if(!strcasecmp(n,both)||!strcasecmp(n,title)||(!strncasecmp(n,title,tl)&&!strncmp(n+tl," - ",3)))return 1;
+    }
+    return 0;
+}
 static uint32_t br_rich_generation[2];
 static unsigned char br_rich_last[2][1+2*DV_BROWSE_ROWS][64];
 static unsigned br_rich_last_count[2];
@@ -107,15 +137,18 @@ static void br_publish_rich(const struct br_side *s,const char *message,const un
     rec[n][10]=(unsigned char)s->page.count;rec[n][21]=1;
     dv_put32(rec[n]+24,s->page.total);dv_put32(rec[n]+28,s->page.first);
     br_text(rec[n]+32,DV_BROWSE_HEADER,(const char *)page+20);n++;
+    br_stems_refresh(s->selected.mount,oq_feature_api->now_ms());
     for(unsigned i=0;i<s->page.count&&i<DV_BROWSE_ROWS;i++) {
         const struct oqmod_catalog_item *row=&s->page.row[i];
+        char artist[sizeof row->artist+10];
+        snprintf(artist,sizeof artist,"%s%s",br_has_stems(row->title,row->artist)?"(STEMS) ":"",row->artist);
         dv_header(rec[n],s->deck,'R',0);rec[n][10]=(unsigned char)i;
         br_text(rec[n]+20,DV_BROWSE_TITLE,row->title);n++;
         dv_header(rec[n],s->deck,'A',0);rec[n][10]=(unsigned char)i;
         rec[n][20]=(unsigned char)row->bpm_x100;rec[n][21]=(unsigned char)(row->bpm_x100>>8);
         /* the key as is (Ebm, F#m), small m/b as dv_key_byte: br_text's "..." would replace any 3-letter key (R94) */
         for(unsigned c=0;c<DV_KEY&&row->key[c];c++)rec[n][22+c]=dv_key_byte(row->key[c]);
-        br_text(rec[n]+29,DV_BROWSE_ARTIST,row->artist);n++;
+        br_text(rec[n]+29,DV_BROWSE_ARTIST,artist);n++;
     }
     /* compared without the generation (p+16) and the header's cursor byte (p[20]) */
     int same=n==br_rich_last_count[side]&&!memcmp(rec,br_rich_last[side],(size_t)n*64);
@@ -190,6 +223,11 @@ static void br_close_locked(unsigned side) {
     s->armed=0;s->notice=0;s->page_valid=0;
     s->load_track=s->load_media=s->load_revision=0;
     s->done=++s->revision;browser_io.close(side);br_closed++;
+    /* The controller drops its rich rows on close but treats a repeated generation as
+     * rows it already has, so the first page after reopening the same list stayed plain
+     * until a scroll brought new rows. Forget the last set: the next open gets a new
+     * generation and is drawn rich straight away. */
+    br_rich_last_count[side]=0;if(!++br_rich_generation[side])++br_rich_generation[side];
     for(unsigned i=0;i<2;i++)if(s->key[i].down)s->key[i].latched=1;
     if(s->wheel.down)s->wheel.latched=1;
 }

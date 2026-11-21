@@ -1,4 +1,4 @@
-Choose LOW, ALL or HIGH to select the frequency range
-used by the filter-assisted Beat FX controls.
+LOW or HIGH plays the Beat FX like holding the bottom
+or top of the X-PAD, at the selected beat. ALL is normal.
+BEAT FX ON switches it on and off as usual.
 Beat FX Sidebar must be enabled to show the buttons.
-This does not add an independent three-band master EQ.

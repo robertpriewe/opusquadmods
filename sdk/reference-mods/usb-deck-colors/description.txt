@@ -1,0 +1,3 @@
+Jog rings, deck buttons and the deck color show the color of
+the USB each deck's track was loaded from, local USB or LINK USB.
+TYTO's Deck Highlight follows it too. Needs firmware R123 or later.

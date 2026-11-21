@@ -418,6 +418,14 @@ void azstem_stem_eq(int deck, int hi10, int mid10, int low10) {
     for (int k = 0; k < NSTEM; k++)
         atomic_store_explicit(&g_sgain_k[deck][k], g[k], memory_order_relaxed);
 }
+/* OPUS (R122+): bass on its own knob (channel TRIM); -1 for trim10 keeps AZ's MID. */
+void azstem_stem_eq4(int deck, int hi10, int mid10, int low10, int trim10);
+void azstem_stem_eq4(int deck, int hi10, int mid10, int low10, int trim10) {
+    azstem_stem_eq(deck, hi10, mid10, low10);
+    if (deck < 0 || deck >= NDECK || hi10 < 0 || trim10 < 0)
+        return;
+    atomic_store_explicit(&g_sgain_k[deck][2], (int) (eq_knob_gain(trim10) * 1000.0 + 0.5), memory_order_relaxed);
+}
 /* The Stem Volume gain one stem of this deck plays at, x1000 (1000 = unity, also for
  * an unknown deck or stem). azmod scales that stem's share of the waveform by it. */
 int azstem_stem_gain(int deck, int stem);

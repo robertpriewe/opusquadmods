@@ -1,0 +1,6 @@
+{
+  "folder": "ring-brightness",
+  "title": "Jog Ring Brightness",
+  "description": "Dim both jog rings to 75, 50, 25 or 10 percent of their normal\nbrightness. Works with deck colours, Party Mode and other mods.\nNeeds firmware R121 or later.",
+  "order": 135
+}

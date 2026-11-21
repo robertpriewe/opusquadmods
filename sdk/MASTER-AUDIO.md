@@ -17,6 +17,8 @@ returns NULL on every firmware.
 Use it for meters, spectrum displays, beat or key detection, visualisers, recording or
 streaming. Example: `examples/master-meter`.
 
+To **change** deck music (before the mixer), use the deck audio insert: [DECK-AUDIO.md](DECK-AUDIO.md).
+
 ```c
 #include "oqmod_master_audio.h"
 static const struct oq_master_audio_api *master;

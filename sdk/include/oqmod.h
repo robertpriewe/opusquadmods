@@ -30,6 +30,21 @@ struct oqmod_deck {                /* one deck, as the firmware sees it */
     char title[128], artist[128], key[8];
 };
 
+/* R122: the mixer's controls as the deck software receives them (mixer()). Values are
+ * 10-bit, 0..1023; knobs are 512 at 12 o'clock, faders 0 at the bottom. Channels are
+ * 0..3 = mixer channels 1..4. MIC level knobs are analog and not reported. */
+struct oqmod_mixer {
+    uint32_t size;                 /* set to sizeof before calling */
+    uint32_t valid;                /* 1 once a frame from the mixer has arrived */
+    uint64_t updated_ms;           /* now_ms() of the last frame */
+    uint16_t fader[4], crossfader;
+    uint16_t trim[4], hi[4], mid[4], low[4], color[4];
+    uint16_t master, booth, zone, headphones_level, headphones_mix;
+    uint16_t mic1_hi, mic1_low, mic2_hi, mic2_low;
+    uint32_t buttons;              /* raw switch bytes 0x0a, 0x0b, 0x0c, 0x0e (CUE, ZONE, Beat FX) */
+    unsigned char raw[128];        /* the frame itself, for research */
+};
+
 struct oqmod_canvas;               /* opaque: the mod's overlay area while drawing */
 /* A USB-owned native theme, registered once during init and resident until
  * restart. The host copies this table; it never owns the colour algorithm.
@@ -110,6 +125,10 @@ struct oqmod_layout_provider {
 };
 #define OQMOD_PANELS_MAX 10u
 #define OQMOD_PANEL_TOUCH 1u
+/* R124: the panel belongs to a native pop-up (e.g. an extra entry in a mixer input menu): it
+ * stays visible while EP136's mixer pop-ups are open. Other panels step aside then. Older
+ * firmware refuses this flag (panels_set returns 0). */
+#define OQMOD_PANEL_ABOVE_POPUPS 2u
 struct oqmod_panel {int x,y,w,h;uint32_t flags;int hit_margin_x,hit_margin_y;};
 struct oqmod_waveform_context {void *view;uint32_t layout,selected[2];};
 /* Reserved overlay slots follow native popup visibility in all layouts. */
@@ -123,6 +142,19 @@ struct oqmod_usb_snapshot {
     uint32_t size,count,generation,reserved;uint64_t active;
     struct oqmod_usb_source sources[OQMOD_USB_MAX];
 };
+/* R124: LINK USBs/SDs of other Pro DJ Link players as well. Set size to
+ * sizeof(struct oqmod_usb_snapshot_link) and reserved to OQMOD_USB_WANT_LINK before
+ * usb_sources(); a host that knows LINK sources returns reserved = OQMOD_USB_WANT_LINK
+ * (older hosts return the local list with reserved 0 and size of the short struct).
+ * A LINK source has (key & 0xff) == 2 (its LinkMemberID word) and port = player 1..8;
+ * the OPUS's own USBs come first. usb_open() accepts both. */
+#define OQMOD_USB_WANT_LINK 1u
+#define OQMOD_USB_MAX_LINK 8u
+struct oqmod_usb_snapshot_link {
+    uint32_t size,count,generation,reserved;uint64_t active;
+    struct oqmod_usb_source sources[OQMOD_USB_MAX_LINK];
+};
+static inline int oqmod_usb_is_link(uint64_t key) {return (key&0xffu)==2u;}
 
 struct oqmod_api {
     uint32_t version, size;        /* OQMOD_API_VERSION, sizeof(struct oqmod_api) */
@@ -311,6 +343,26 @@ struct oqmod_api {
      * brightens. Call from tick()/enabled(); returns 0 when another enabled mod owns it.
      * Switching the mod off restores 100. Check a->size before calling (older firmware). */
     int (*ring_brightness)(unsigned percent);
+    /* R122: the mixer's controls (struct oqmod_mixer above); any thread, returns 1 when
+     * valid. deck_pause() pauses deck 1..4 the way its PLAY/PAUSE button does (the
+     * counterpart of deck_play). Check a->size before calling (older firmware). */
+    int (*mixer)(struct oqmod_mixer *out);
+    int (*deck_pause)(unsigned deck);
+    /* R123: deck buttons, deck-select lock and the deck software's own LEDs.
+     * deck_buttons(handler): every deck-controller button edge goes to handler(side 0 left
+     * / 1 right, id, down) on the deck software's input thread (keep it short; call no
+     * other API from it); return 1 to keep that edge from the deck software (both edges of
+     * a press should get the same answer). The id's low byte is the side; ids are stable
+     * per button (e.g. find MASTER by pressing it with a diagnostic open).
+     * deck_select_lock(mask): bit 0 = deck 1 .. bit 3 = deck 4; the deck-select buttons can
+     * no longer switch a side to a locked deck (lifted when the mod is switched off).
+     * led_state(side, led, &value): what the deck software itself shows on that LED (before
+     * any mod's led_set): on/off LEDs give 0..3, RGB LEDs 0xRRGGBB (0..16 per channel), the
+     * play LED 0..32; OQMOD_LED_MASTER tells which side shows MASTER. 0 = no frame yet.
+     * Check a->size before calling (older firmware). */
+    int (*deck_buttons)(int (*handler)(unsigned side, uint64_t id, int down));
+    int (*deck_select_lock)(unsigned deck_mask);
+    int (*led_state)(unsigned side, unsigned led, uint32_t *value);
 };
 
 /* LED numbers for led_set() (both sides have each). */

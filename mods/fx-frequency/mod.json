@@ -1,7 +1,7 @@
 {
   "folder": "fx-frequency",
   "title": "FX Frequency",
-  "description": "Choose LOW, ALL or HIGH to select the frequency range\nused by the filter-assisted Beat FX controls.\nBeat FX Sidebar must be enabled to show the buttons.\nThis does not add an independent three-band master EQ.",
+  "description": "LOW or HIGH plays the Beat FX like holding the bottom\nor top of the X-PAD, at the selected beat. ALL is normal.\nBEAT FX ON switches it on and off as usual.\nBeat FX Sidebar must be enabled to show the buttons.",
   "order": 80,
   "min_firmware": "R117"
 }

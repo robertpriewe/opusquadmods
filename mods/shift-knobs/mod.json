@@ -1,0 +1,6 @@
+{
+  "folder": "shift-knobs",
+  "title": "SHIFT Search & Zoom",
+  "description": "Hold SHIFT + a TRACK SEARCH button to search through the track\non that side's deck. SHIFT + BROWSE or BEAT LOOP zooms the waveforms.",
+  "order": 139
+}

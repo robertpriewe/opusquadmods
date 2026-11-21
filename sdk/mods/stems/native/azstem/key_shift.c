@@ -75,6 +75,56 @@ static inline int fgpr_deck_of(uintptr_t fg) {
             return d;
     return -1;
 }
+/* ---- 2.11: deck -> FGPR identity only from the deck's own unit, never shared ----------
+ * Stems 2.10 session logs (Nov 20) showed the live per-render update filing other units'
+ * FGPRs under a deck: units of other decks report deck 1's player number (or deck 2's) for a
+ * while, and their FGPR was stored as that deck's. For 10-17 s at a time deck 2's map held
+ * the FGPR deck 1 was reading through, so deck 1's new track played deck 2's stems.
+ * Now: a render only updates deck d's FGPR when the unit holds deck d's slot (the identity
+ * the render tag already uses); an FGPR any other deck's own unit reported in the last
+ * FG_EXCL_TICKS ticks, or one that just changed, is withheld, and reads inside a withheld
+ * FGPR play the track's own audio instead of falling to the content map. Never another
+ * deck's stems. */
+#define FG_SEEN_N 4
+#define FG_EXCL_TICKS 15u /* 3 s at the 200 ms tick */
+static _Atomic unsigned g_fg_gen = 1; /* idmap tick generation */
+struct fgseen {
+    _Atomic uintptr_t val;
+    _Atomic unsigned gen;
+};
+static struct fgseen g_fg_seen[NDECK][FG_SEEN_N]; /* FGPRs each deck's own unit reported */
+static _Atomic uintptr_t g_fg_blocked[NDECK];     /* withheld FGPRs: reads inside them pass through */
+/* RT (render thread of deck d only): remember that d's own unit reported FGPR v. */
+static inline void fg_note_seen(int d, uintptr_t v) {
+    if (!v)
+        return;
+    unsigned gen = atomic_load_explicit(&g_fg_gen, memory_order_relaxed);
+    int old = 0;
+    unsigned oldg = ~0u;
+    for (int i = 0; i < FG_SEEN_N; i++) {
+        uintptr_t s = atomic_load_explicit(&g_fg_seen[d][i].val, memory_order_relaxed);
+        unsigned g = atomic_load_explicit(&g_fg_seen[d][i].gen, memory_order_relaxed);
+        if (s == v) {
+            if (g != gen)
+                atomic_store_explicit(&g_fg_seen[d][i].gen, gen, memory_order_relaxed);
+            return;
+        }
+        if (g < oldg) {
+            oldg = g;
+            old = i;
+        }
+    }
+    atomic_store_explicit(&g_fg_seen[d][old].gen, gen, memory_order_relaxed);
+    atomic_store_explicit(&g_fg_seen[d][old].val, v, memory_order_relaxed);
+}
+static inline int fg_blocked(uintptr_t fg) {
+    if (!fg)
+        return 0;
+    for (int d = 0; d < NDECK; d++)
+        if (atomic_load_explicit(&g_fg_blocked[d], memory_order_relaxed) == fg)
+            return 1;
+    return 0;
+}
 static inline void fg_enter(struct fgscope *sc, uintptr_t self) {
     sc->save_ctx = g_fgpr_ctx;
     sc->save_deck = g_tls_deck;
@@ -460,8 +510,14 @@ static pbi_fn g_orig = NULL; /* trampoline to the real processBlockInternal */
 
 static void hook_pbi(void *self, void *buf, void *midi) {
     int live_deck=ap_deck_of(self);
-    if(live_deck>=0&&live_deck<NDECK)
-        atomic_store_explicit(&g_djpu_fgpr[live_deck],djpu_fgpr_of((uintptr_t)self),memory_order_release);
+    if(live_deck>=0&&live_deck<NDECK) {
+        uintptr_t fgv=djpu_fgpr_of((uintptr_t)self);
+        /* 2.11: only the unit holding this deck's slot speaks for the deck */
+        if(atomic_load_explicit(&g_deck_self[STEM_SLOT[live_deck]],memory_order_relaxed)==self) {
+            atomic_store_explicit(&g_djpu_fgpr[live_deck],fgv,memory_order_release);
+            fg_note_seen(live_deck,fgv);
+        }
+    }
 
     /* Tag the thread with the rendering deck before g_orig, so a synchronous
      * FGPR::read -> PageBuffer::read inside the render routes by this per-deck
@@ -823,6 +879,20 @@ static Pos32 pbread_hook(void *self, Float2 *dst, const Pos32 *pos, long long cn
     int mydeck = (tlsd >= 0) ? tlsd : pb_deck_of((uintptr_t) self);
     if (mydeck >= NDECK)
         mydeck = -1; /* out of range = unknown: never another deck's stems */
+    /* 2.11: inside an FGPR withheld as shared, the content map must not decide either */
+    if (tlsd < 0 && g_fgpr_depth > 0 && fg_blocked(g_fgpr_ctx))
+        mydeck = -1;
+    /* 2.12: the content map (pb_deck_of) keys on a view object every deck shares
+     * (2.11 logs: one self mapped to deck 2, later to deck 1), so it may only decide
+     * while no other deck plays stems. Seen deciding ~18 reads in 34 min. */
+    if (tlsd < 0 && mydeck >= 0)
+        for (int e = 0; e < NDECK; e++)
+            if (e != mydeck &&
+                (atomic_load_explicit(&g_dk[e].ctrl, memory_order_relaxed) & 0x80u) &&
+                g_dk[e].stem_frames > 0) {
+                mydeck = -1;
+                break;
+            }
     int ak_on = atomic_load_explicit(&g_autokey_on, memory_order_relaxed);
     int ak_manual = atomic_load_explicit(&g_key_manual, memory_order_relaxed);
     if (inj_on && dst && pos) {
@@ -1872,28 +1942,65 @@ static void kfobs_flush(void) {
 static _Atomic int
     g_idmap_step[NDECK]; /* 0 ok, 1 no unit, 5 no FGPR from the ctor, 6 aliased */
 static void fgpr_idmap_tick(void) {
-    uintptr_t fg[NDECK];
+    uintptr_t fg[NDECK], cand[NDECK], block[NDECK];
     int step[NDECK];
+    static uintptr_t prev_cand[NDECK];
+    unsigned gen = atomic_fetch_add_explicit(&g_fg_gen, 1, memory_order_relaxed) + 1u;
     for (int d = 0; d < NDECK; d++) {
         fg[d] = 0;
+        block[d] = 0;
         step[d] = 1;
-        if (!atomic_load_explicit(&g_deck_self[STEM_SLOT[d]], memory_order_acquire))
+        if (!atomic_load_explicit(&g_deck_self[STEM_SLOT[d]], memory_order_acquire)) {
+            cand[d] = 0;
             continue;
+        }
         fg[d] = atomic_load_explicit(&g_djpu_fgpr[d], memory_order_acquire);
         step[d] = fg[d] ? 0 : 5;
+        cand[d] = fg[d];
     }
     for (int d = 0; d < NDECK; d++)
         for (int e = d + 1; e < NDECK; e++)
-            if (fg[d] && fg[d] == fg[e]) {
+            if (cand[d] && cand[d] == cand[e]) {
+                block[d] = block[e] = cand[d];
                 fg[d] = fg[e] = 0;
                 step[d] = step[e] = 6;
             }
+    /* 2.11: shared within the window, or just changed: withhold (and block) */
+    for (int d = 0; d < NDECK; d++) {
+        if (!fg[d])
+            continue;
+        int shared = 0;
+        for (int e = 0; e < NDECK && !shared; e++) {
+            if (e == d)
+                continue;
+            for (int i = 0; i < FG_SEEN_N; i++)
+                if (atomic_load_explicit(&g_fg_seen[e][i].val, memory_order_relaxed) == fg[d] &&
+                    gen - atomic_load_explicit(&g_fg_seen[e][i].gen, memory_order_relaxed) <=
+                        FG_EXCL_TICKS) {
+                    shared = 1;
+                    break;
+                }
+        }
+        if (shared) {
+            block[d] = fg[d];
+            fg[d] = 0;
+            step[d] = 7;
+        } else if (fg[d] != prev_cand[d]) {
+            block[d] = fg[d];
+            fg[d] = 0;
+            step[d] = 8;
+        }
+    }
+    for (int d = 0; d < NDECK; d++) {
+        prev_cand[d] = cand[d];
+        atomic_store_explicit(&g_fg_blocked[d], block[d], memory_order_relaxed);
+    }
     for (int d = 0; d < NDECK; d++) {
         uintptr_t old = atomic_load_explicit(&g_ak_fgpr_rt[d], memory_order_relaxed);
         int ostep = atomic_load_explicit(&g_idmap_step[d], memory_order_relaxed);
         if (old != fg[d] || ostep != step[d])
-            logln("FGPRIDMAP d%d 0x%lx -> 0x%lx (step %d: 0 ok, 1 no unit, 5 no FGPR from the "
-                  "ctor, 6 aliased)",
+            logln("FGPRIDMAP d%d 0x%lx -> 0x%lx (step %d: 0 ok, 1 no unit, 5 no FGPR, 6 aliased, "
+                  "7 shared with another deck <3 s, 8 just changed)",
                   d, (unsigned long) old, (unsigned long) fg[d], step[d]);
         atomic_store_explicit(&g_idmap_step[d], step[d], memory_order_relaxed);
         atomic_store_explicit(&g_ak_fgpr_rt[d], fg[d], memory_order_relaxed);

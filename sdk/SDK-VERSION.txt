@@ -1,4 +1,8 @@
-OQ Mods SDK 1.7.0 (firmware R121, internal revision 7762)
+OQ Mods SDK 1.11.0 (firmware R124, internal revision 7765)
+1.11: deck audio insert oqmod_deck_audio.h + DECK-AUDIO.md + examples/deck-tone (R120+; header only, no firmware change)
+1.10: LINK USB sources (usb_sources OQMOD_USB_WANT_LINK), min-firmware.txt + oqmod_firmware.h + tools/min_firmware.py (R124)
+1.9: deck_buttons(), deck_select_lock() and led_state() (R123)
+1.8: mixer() controls (faders, crossfader, EQs, levels, buttons) and deck_pause() (R122)
 1.7: ring_brightness() jog ring dimming (R121)
 1.6: read-only master feed opusmod_master_audio_api_v1 and oq_master_audio_discover_tap() (R118)
 API version 1, append-only; full reference in API-REFERENCE.md

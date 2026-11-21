@@ -39,8 +39,10 @@ static void combined_enabled(int on){
     oq_feature_enabled(on);
     if(!on)oq_feature_api->native_set("mode",0);
 }
+static int g_arrows;   /* 2.3: defined (=1) in constants.h */
 static void combined_tick(void){
     oq_feature_tick();int variant=oq_feature_api->setting_get("mode",3);
+    __atomic_store_n(&g_arrows,oq_feature_api->setting_get("arrows",1)==1,__ATOMIC_RELAXED);   /* 2.3 */
     int mode=variant==2?RT_MODE_FAST_60:variant>=1&&variant<=3?RT_MODE_SMOOTH_30:RT_MODE_STOCK;
     __atomic_store_n(&rt_mode,oq_feature_on?mode:RT_MODE_STOCK,__ATOMIC_RELEASE);
 }
@@ -95,7 +97,7 @@ static int layout_paint_begin(void *comp,void *graphics){
 static void layout_paint_end(void *comp,void *graphics){(void)comp;void ***ctx=*(void ****)graphics;((void (*)(void *))(*ctx)[15])(ctx);}
 static int layout_pitch(const struct oqmod_layout_inputs *input){layout_cfg=*input;return lane4_pitch();}
 int oqmod_init(const struct oqmod_api *a,struct oqmod_info *info){
-    if(!a||a->size<sizeof *a||!a->layout_provider||!a->components||!a->waveform_parts||!a->waveform_sidebar||!a->native_get||!a->native_engine)return 1;
+    if(!a||a->size<offsetof(struct oqmod_api,ring_brightness)||!a->layout_provider||!a->components||!a->waveform_parts||!a->waveform_sidebar||!a->native_get||!a->native_engine)return 1;
     /* This new per-layout preference has no inherited stock-timing fallback.
      * Existing explicit choices win; missing mode starts at Native Height 30. */
     if(!a->setting_get||!a->setting_set)return 1;
@@ -107,6 +109,7 @@ int oqmod_init(const struct oqmod_api *a,struct oqmod_info *info){
     if(!a->layout_provider(&p))return 1;
     const struct oqmod_render_provider timing={sizeof timing,rt_period,paint_begin,paint_end};
     if(!a->render_provider||!a->render_provider(&timing))return 1;
+    /* 2.3: input arrows in the 4-deck view; no option row (4 rows max, all used): settings.txt arrows=0 turns them off */
     info->enabled=combined_enabled;info->tick=combined_tick;
-    info->version="2.2";return 0;
+    info->version="2.6";return 0;
 }

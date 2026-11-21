@@ -1,26 +1,17 @@
-# OQ Mods SDK 1.7.0 (API version 1)
+# OQ Mods SDK 1.11.0 (API version 1)
 
 **Start with [API-REFERENCE.md](API-REFERENCE.md)**: every API call, who may call it and
-from where, the mod folder files and the symbols the firmware exports.
+from where, the mod folder files and the symbols the firmware exports. Matches firmware
+R118.
 
-What is in this folder:
-
-| Folder | Contents |
-|---|---|
-| `include/` | The headers a mod builds against (`oqmod.h` and its companions) |
-| `mods/` | Source of the feature mods: 4-Deck Waveforms, Side Screen Browser, Stems, Light Mode, Quick USB, Beat FX Sidebar, FX Frequency, FX Knob Selector, Slip Mode, Playlist Editing, Hide Track Name, Continuous Zone Playback, Side Screen Waveforms (Legacy), plus the diagnostics tools |
-| `reference-mods/` | Source of Party Mode, Gate Cues, Jog Ring Brightness, Bluetooth Waveform and Pro DJ Link |
-| `examples/` | Small example mods to start from (BPM difference, set list, master meter, party mode) |
-| `tests/` | Host-side tests for the mod engines |
-| `build.sh`, `Dockerfile` | Build any mod folder into `build/<name>/mod.so` (needs Docker) |
-
-New in 1.7 (firmware R121): `ring_brightness(percent)` dims both jog rings; see
-`reference-mods/ring-brightness`.
+New in 1.11: a **deck audio insert** (`oqmod_deck_audio.h`): change the four decks' audio
+before the mixer, e.g. EQ or effects on deck music. It is not the master: channel EQ,
+faders, Beat FX and LINE/PHONO/MIC come after it in the mixer hardware. See
+[DECK-AUDIO.md](DECK-AUDIO.md) and `examples/deck-tone`.
 
 New in 1.6 (R118): a **read-only master feed** for mods, a copy of the final stereo mix
 for meters, analysis or recording. See [MASTER-AUDIO.md](MASTER-AUDIO.md) and
 `examples/master-meter`.
-
 
 New in 1.5: a mod folder can carry its own `menu.title`, `version.txt` and
 `description.txt` (R116), and `choices.order` to reorder choice buttons without changing
@@ -102,6 +93,7 @@ contract](MASTER-AUDIO.md). **Current firmware does not provide final-master
 samples or a writable master insert.** The new optional header is unreleased SDK
 groundwork; discovery safely reports unavailable on R112. It is not a working
 master EQ, and the AZ's read-only pre-mixer deck taps are not a substitute.
+To change deck music before the mixer, use the deck audio insert ([DECK-AUDIO.md](DECK-AUDIO.md)).
 
 ## Named events (SDK 1.1)
 
