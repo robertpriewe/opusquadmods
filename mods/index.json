@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "updated": "2026-11-20",
+  "updated": "2026-11-25",
   "mods": [
     {
       "folder": "four-deck",
@@ -120,8 +120,17 @@
       "description": "Control prepared stems independently for each deck.\nChannel 3/4 knobs set deck 1/2 stem volume, in button order:\nTRIM vocals, HI instruments, MID bass, LOW drums.",
       "order": 40,
       "min_firmware": "R122",
-      "latest": "3.0",
+      "latest": "3.1",
       "versions": [
+        {
+          "version": "3.1",
+          "date": "2026-11-25",
+          "path": "stems/versions/3.1/stems.zip",
+          "size": 111295,
+          "sha256": "4f483ab67a7caf10f04f80352ca1384ff47f8aac2887786e6a30e955c2ce0868",
+          "changelog": "- Tracks with stems are marked in the browser by their own title, so they also show when the file name differs from the title (shortened names, names ending in a space, numbered copies, edited titles).",
+          "min_firmware": "R122"
+        },
         {
           "version": "3.0",
           "date": "2026-11-20",

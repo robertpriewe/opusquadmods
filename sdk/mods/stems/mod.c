@@ -87,7 +87,9 @@ static void stem_eq_tick(void){
 #include <strings.h>
 struct sb_holder {int ref;int pad;size_t bytes;char text[];};
 #define SB_NAMES 2048
-struct sb_list {unsigned count;char name[SB_NAMES][128];};
+#include "sb_title.h"
+/* 3.1: title = the folded title tag of the file the folder was made from (source.json), "" if unknown */
+struct sb_list {unsigned count;char name[SB_NAMES][128];char title[SB_NAMES][200];};
 static struct sb_list *sb_lists[2];static struct sb_list *_Atomic sb_live;static unsigned sb_which;
 static uint64_t sb_scanned;static unsigned sb_hooked,sb_marked;
 /* diagnostics (addon_log): what the hooks see */
@@ -106,13 +108,19 @@ static void sb_scan(void){
     if(m){struct dirent *u;
         while((u=readdir(m))){
             if(u->d_name[0]=='.')continue;
-            char dir[300];snprintf(dir,sizeof dir,"/media/usb/%s/STEMS",u->d_name);
+            char root[300],dir[320];snprintf(root,sizeof root,"/media/usb/%s",u->d_name);snprintf(dir,sizeof dir,"%s/STEMS",root);
             DIR *d=opendir(dir);if(!d)continue;
+            const struct sb_list *old=sb_lists[sb_which];   /* the live list: titles already read */
             struct dirent *e;
             while((e=readdir(d))&&l->count<SB_NAMES){
                 size_t n=strlen(e->d_name);
                 if(e->d_name[0]=='.'||n>=sizeof l->name[0])continue;
-                memcpy(l->name[l->count++],e->d_name,n+1);
+                unsigned i=l->count++;
+                memcpy(l->name[i],e->d_name,n+1);l->title[i][0]=0;
+                int known=0;
+                if(old)for(unsigned j=0;j<old->count;j++)if(!strcmp(old->name[j],e->d_name)){memcpy(l->title[i],old->title[j],sizeof l->title[i]);known=1;break;}
+                if(!known){char sub[600],audio[900],t[400];snprintf(sub,sizeof sub,"%s/%s",dir,e->d_name);
+                    if(st_source_path(root,sub,audio,sizeof audio)&&st_file_title(audio,t,sizeof t))st_fold(t,l->title[i],sizeof l->title[i]);}
             }
             closedir(d);
         }
@@ -126,9 +134,18 @@ static size_t sb_chars(const char *s){size_t c=0;for(;*s;s++)if(((unsigned char)
  * short ("Artist - Title start", or "Title start") matches a title that starts with its rest. */
 #define SB_CUT_CHARS 40
 #define SB_MIN_PART 4
-static int sb_cut_match(const char *f,const char *title,size_t n){
-    if(sb_chars(f)<SB_CUT_CHARS)return 0;
-    size_t fn=strlen(f);
+static int sb_cut_match(const char *folder,const char *title,size_t n){
+    if(sb_chars(folder)<SB_CUT_CHARS)return 0;
+    /* 3.1: drop what the file name adds around the title: a leading track number ("01 ",
+     * "1-01 "), and a trailing "_" (a trailing space the stick can't store) or "-1" (a copy) */
+    char f[128];size_t fn;
+    {const char *p=folder;
+     if(p[0]>='0'&&p[0]<='9'){const char *q=p;while(*q>='0'&&*q<='9')q++;
+        if(*q=='-'&&q[1]>='0'&&q[1]<='9'){q++;while(*q>='0'&&*q<='9')q++;}
+        if(*q==' '&&q-p<=5)p=q+1;}
+     snprintf(f,sizeof f,"%s",p);fn=strlen(f);
+     if(fn>2&&f[fn-2]=='-'&&f[fn-1]>='1'&&f[fn-1]<='9')f[fn-=2]=0;
+     while(fn&&(f[fn-1]=='_'||f[fn-1]==' '))f[--fn]=0;}
     if(fn>=SB_MIN_PART&&n>fn&&!strncasecmp(title,f,fn))return 1;             /* "Title start" */
     for(const char *p=strstr(f," - ");p;p=strstr(p+1," - ")){                  /* "Artist - Title start" */
         const char *rest=p+3;size_t rn=strlen(rest);
@@ -139,6 +156,8 @@ static int sb_cut_match(const char *f,const char *title,size_t n){
 static int sb_has(const char *title){
     const struct sb_list *l=__atomic_load_n(&sb_live,__ATOMIC_ACQUIRE);
     if(!l||!title[0])return 0;
+    {char ft[200];st_fold(title,ft,sizeof ft);   /* 3.1: the title tag of the folder's own track */
+     if(ft[0])for(unsigned i=0;i<l->count;i++)if(l->title[i][0]&&!strcmp(l->title[i],ft))return 1;}
     size_t n=strlen(title);
     for(unsigned i=0;i<l->count;i++){const char *f=l->name[i];size_t fn=strlen(f);
         /* the folder is the file name: "Title", "Title - Artist" or "Artist - Title" (2.13) */
@@ -313,5 +332,5 @@ int oqmod_init(const struct oqmod_api *a,struct oqmod_info *info){
     a->option("stemeq","Stem volume on CH 3/4 EQ",1);
     a->option("browsemark","Mark tracks with stems in the browser",1);
     sb_install(a);
-    info->enabled=stem_enabled;info->tick=stem_tick;info->version="3.0";return 0;
+    info->enabled=stem_enabled;info->tick=stem_tick;info->version="3.1";return 0;
 }
